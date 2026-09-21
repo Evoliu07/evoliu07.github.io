@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>实时新闻 · 刘柏廷 Evo</title>
+<style>
+:root{ --ink:#171411; --muted:#6d6258; --ink2:#3a332c; --paper:#f8f2e7; --line:#d8c8af;
+  --red:#b9422f; --blue:#245f73; --green:#0a6b4c; --white:#fffaf0;
+  --surface:rgba(255,250,240,.66); --bar-bg:rgba(248,242,231,.95);
+  --font-b:"Songti SC","Noto Serif SC",Georgia,serif;
+  --font-d:"PingFang SC","Microsoft YaHei",Helvetica,sans-serif;
+  --bg:radial-gradient(circle at 18% 6%, rgba(184,137,47,.09), transparent 55%), #f8f2e7;
+  --shadow:0 2px 10px rgba(60,45,25,.07); --tint:rgba(184,137,47,.12); }
+body.dark{ --ink:#e8e4dc; --muted:#9c948a; --ink2:#cfc9bf; --paper:#14120f; --line:#332e27;
+  --white:#0d0b09; --surface:rgba(34,30,25,.72); --bar-bg:rgba(20,18,15,.95);
+  --bg:radial-gradient(circle at 18% 6%, rgba(217,171,82,.09), transparent 55%), #14120f;
+  --red:#e07a63; --blue:#7fb6cc; --green:#4fbe86; --shadow:0 2px 14px rgba(0,0,0,.5);
+  --tint:rgba(217,171,82,.13); }
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font-b);background:var(--bg);color:var(--ink);line-height:1.8;font-size:16px}
+a{color:var(--blue);text-decoration:none} a:hover{text-decoration:underline}
+.bar{position:sticky;top:0;z-index:60;background:var(--bar-bg);backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;
+  gap:14px;padding:0 24px;height:58px;font-family:var(--font-d)}
+.bar b{font-size:15px;font-weight:600}
+.bar nav{display:flex;gap:18px;font-size:13.5px;align-items:center;flex-wrap:wrap}
+.bar nav a{color:var(--muted)} .bar nav a:hover{color:var(--ink)}
+.tg{border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:99px;
+  padding:5px 13px;font:inherit;font-size:12.5px;cursor:pointer;font-family:var(--font-d)}
+main{max-width:1120px;margin:0 auto;padding:30px 26px 70px}
+h1{font-family:var(--font-d);font-size:27px;font-weight:600}
+.stamp{color:var(--muted);font-size:13.5px;font-family:var(--font-d);margin:6px 0 26px}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(168px,1fr));gap:13px}
+.kpi{background:var(--surface);border:1px solid var(--line);border-radius:13px;padding:15px 17px;
+  box-shadow:var(--shadow)}
+.kpi .lb{font-size:12.5px;color:var(--muted);font-family:var(--font-d);letter-spacing:.02em}
+.kpi .vl{font-size:23px;font-weight:650;font-family:var(--font-d);margin-top:2px;
+  font-variant-numeric:tabular-nums;line-height:1.35}
+.kpi .vl .u{font-size:12.5px;font-weight:400;color:var(--muted);margin-left:3px}
+.kpi .ch{font-size:13px;font-family:var(--font-d);font-variant-numeric:tabular-nums;
+  min-height:20px;margin-top:3px}
+.kpi .sub{font-size:11.5px;color:var(--muted);font-family:var(--font-d);margin-top:3px}
+.up{color:var(--red)} .down{color:#1e8449}
+section{margin-top:40px}
+h2{font-family:var(--font-d);font-size:12.5px;letter-spacing:.17em;text-transform:uppercase;
+  color:var(--red);font-weight:700;margin-bottom:6px}
+.ptitle{font-family:var(--font-d);font-size:19px;font-weight:650;margin-bottom:14px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:start}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:17px 19px;
+  box-shadow:var(--shadow);min-width:0}
+.card h3{font-family:var(--font-d);font-size:15px;font-weight:650;margin-bottom:12px;
+  padding-bottom:9px;border-bottom:1px solid var(--line)}
+.chartbox{width:100%;overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:13.5px;font-family:var(--font-d);
+  font-variant-numeric:tabular-nums}
+th,td{padding:8px 9px;text-align:right;border-bottom:1px solid var(--line);white-space:nowrap}
+th:first-child,td:first-child{text-align:left}
+th{color:var(--muted);font-weight:600;font-size:12px}
+th .hd{font-weight:400;font-size:11px;opacity:.8}
+td.tn{font-weight:650}
+tr:last-child td{border-bottom:0}
+.tbwrap{overflow-x:auto}
+.units{font-size:12.5px;color:var(--muted);font-family:var(--font-d);margin-top:10px;
+  line-height:1.7}
+p.lead{font-size:15.5px;color:var(--ink2);margin-bottom:14px;line-height:1.9}
+/* 方法模块卡片 */
+.mgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:13px}
+.mcard{background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--green);
+  border-radius:11px;padding:15px 16px;box-shadow:var(--shadow)}
+.mcard .n{font-size:11.5px;color:var(--green);font-family:var(--font-d);font-weight:700;
+  letter-spacing:.1em}
+.mcard b{display:block;font-family:var(--font-d);font-size:15px;margin:4px 0 6px}
+.mcard span{font-size:13.5px;color:var(--ink2);line-height:1.75}
+footer{margin-top:44px;padding-top:22px;border-top:1px solid var(--line);text-align:center;
+  color:var(--muted);font-size:12.5px;font-family:var(--font-d);line-height:1.9}
+@media(max-width:900px){
+  .grid2{grid-template-columns:1fr;gap:0}
+  .grid2 > .card + .card{margin-top:16px}
+  .bar{height:auto;padding:10px 14px;flex-wrap:wrap}
+  .bar nav{gap:12px;font-size:12.5px}
+  main{padding:22px 15px 56px} h1{font-size:22px}
+  .kpis{grid-template-columns:repeat(auto-fit,minmax(148px,1fr));gap:10px}
+  .kpi .vl{font-size:20px}
+}
+
+main{max-width:1060px;margin:0 auto;padding:26px 20px 60px}
+h1{text-align:center;font-size:27px}
+.stamp{text-align:center;color:var(--muted);font-size:13.5px;font-family:var(--font-d);
+  margin:6px 0 26px}
+.nsec{margin-top:34px}
+.nsec + .nsec{margin-top:44px;border-top:1px solid var(--line);padding-top:30px}
+.nh{display:flex;align-items:baseline;gap:12px;justify-content:center;margin-bottom:16px}
+.nh b{font-family:var(--font-d);font-size:23px;font-weight:800;letter-spacing:.14em}
+.nh span{font-size:12.5px;color:var(--muted);font-family:var(--font-d)}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:13px;
+  padding:15px 18px;box-shadow:var(--shadow)}
+.nlist{list-style:none;padding:0;margin:0}
+.nlist li{padding:11px 0;border-bottom:1px solid var(--line);display:grid;
+  grid-template-columns:92px 1fr;gap:12px;align-items:start}
+.nlist li:last-child{border-bottom:0}
+.nlist .t{font-family:var(--font-d);font-size:12.5px;color:var(--muted);
+  font-variant-numeric:tabular-nums;padding-top:2px}
+.nlist .x{font-size:15.2px;line-height:1.75;color:var(--ink2)}
+.nlist .x a{color:var(--ink2);text-decoration:none}
+.nlist .x a:hover{color:var(--blue);text-decoration:underline}
+.srcbox{margin-top:38px;padding-top:20px;border-top:1px solid var(--line);text-align:center;
+  font-size:12.5px;color:var(--muted);font-family:var(--font-d);line-height:1.9}
+@media(max-width:900px){
+  main{padding:20px 14px 52px}
+  h1{font-size:23px}
+  .nh b{font-size:19px;letter-spacing:.1em}
+  .nlist li{grid-template-columns:1fr;gap:4px}
+  .nlist .t{font-size:11.5px}
+  .nlist .x{font-size:14.5px}
+}
+</style></head><body>
+
+<div class="bar">
+  <b><a href="index.html" style="color:inherit">刘柏廷 · Evo</a>　<span style="color:var(--muted);font-weight:400">实时新闻</span></b>
+  <nav>
+    <a href="dashboard.html">数据看板</a>
+    <a href="index.html">回主页</a>
+    <button class="tg" onclick="document.body.classList.toggle('dark')">深/浅色</button>
+  </nav>
+</div>
+
+<main>
+  <h1>实时新闻</h1>
+  <p class="stamp">证券财经与出海大事　·　更新于 2026-09-20 23:47　·　当日已筛 2000 条快讯</p>
+  
+  <div class="nsec">
+    <div class="nh"><b>证券财经大事</b><span>宏观 · 市场 · 监管</span></div>
+    <div class="card"><ul class="nlist"><li><span class="t">19:17</span><span class="x"><a href="https://finance.sina.cn/7x24/2026-09-18/detail-inisfyex3549080.d.html" target="_blank" rel="noopener">【第七届国际信息商会议在中国香港成功举办】近日，第七届国际信息商会议在中国香港成功举办。本次会议由上海证券交易所（以下简称上交所）全资子公司中国投资信息有限公司（以下简称中投信）主办。会议围绕深化跨境金融信息互联互通、促进全球资本市场开放合作展开交流。来自境内外交易所、信息服务商、资产管理公司等逾百家机构的200余名代表齐聚香江之畔，共话发展新机遇。上交所相关负责人出席会议并致辞。会上，上交所介绍了加快建设世界一流交易所的相关举措，包括持续做强沪市主板和科创板，大力发展指数化投资，稳步发展衍生品市场，持续优化互联互通机制、服务高水平对外开放等。同时表示将依托中投信进一步拓展对外信息数据服务，为全球投资者参与中国资本市场提供更多便利。（上交所）</a></span></li>
+<li><span class="t">18:58</span><span class="x"><a href="https://finance.sina.cn/7x24/2026-09-18/detail-inisfyex3531947.d.html" target="_blank" rel="noopener">【奥佳华：实控人拟协议转让9.621%公司股份】奥佳华公告称，公司控股股东、实控人邹剑寒、李五令（一致行动人）拟通过协议转让方式，向上海峄昕私募基金管理有限公司（代表“峄昕澄真尊享三号私募证券投资基金”）转让合计6001.00万股公司股份，占公司总股本的9.621%，转让价格为4.923元/股，转让总价款合计2.95亿元。本次权益变动后，邹剑寒、李五令合计持股比例降至28.863%，仍为公司控股股东、实控人，本次转让不会导致公司实控人变更。本次股份转让尚需通过深圳证券交易所合规性确认，再办理股份过户手续。</a></span></li>
+<li><span class="t">18:55</span><span class="x"><a href="https://finance.sina.cn/7x24/2026-09-18/detail-inisfyex3529802.d.html" target="_blank" rel="noopener">【公募总规模再接近40万亿 混合基金贡献最大增量】中基协最新公布的公募基金市场数据显示，截至2026年8月末，我国公募基金总规模为39.63万亿元，与7月末的39.11万亿元相比增长5293.09亿元。分基金类型来看，混合基金的8月末的规模为4.09万亿元，环比大增2567.93亿元，贡献最大规模增量；货币市场基金在8月末的规模为16.31万亿元，环比增加1476.80亿元；此外，股票基金、债券基金、QDII规模在8月也实现小幅增长，但FOF规模小幅下降。</a></span></li>
+<li><span class="t">18:54</span><span class="x"><a href="https://finance.sina.cn/7x24/2026-09-18/detail-inisfyex3529329.d.html" target="_blank" rel="noopener">【北交所本周对6起证券异常交易行为采取自律监管措施】从北交所获悉，9月14日至9月18日，北交所将退市风险警示股票“*ST田野”（920023）、“*ST同辉”（920090）、“*ST康乐”（920575）列为重点监控股票；对6起证券异常交易行为采取自律监管措施，涉及拉抬打压、虚假申报等异常交易情形；对41起上市公司重大事项进行专项核查。</a></span></li>
+<li><span class="t">18:48</span><span class="x"><a href="https://finance.sina.cn/7x24/2026-09-18/detail-inisfyex3523696.d.html" target="_blank" rel="noopener">【内蒙新华：连续三日涨停 发布股票交易风险提示】内蒙新华公告称，公司股票于2026年9月16日、9月17日、9月18日连续三个交易日涨停，累计涨幅较大，滚动市盈率高于新闻出版行业指数，换手率较高，可能存在非理性炒作情形。公司基本面未发生变化，日常经营正常，不存在应披露而未披露的重大信息，相关主体近6个月及异动期间无买卖公司股票行为。2026年上半年，公司归母净利润2291.08万元，同比下降81.75%；销售毛利率37.35%，同比下降6.24个百分点；销售净利率3.78%，同比下降12.16个百分点。敬请广大投资者注意投资风险，理性投资。</a></span></li>
+<li><span class="t">18:47</span><span class="x"><a href="https://finance.sina.cn/7x24/2026-09-18/detail-inisfyex3523158.d.html" target="_blank" rel="noopener">【法德10年期国债利差触及100个基点】法德10年期国债收益率利差扩大至100个基点，为2012年以来首次。法国财政预算担忧仍是利差走阔的主要驱动因素。尽管法国政府在未能达成2026年目标后计划削减预算，但立法层面如何达成妥协尚不明确，2027年总统大选也带来巨大不确定性。德国自身也面临一定政治不确定性，但当前法国方面的事态影响更为突出。法国兴业银行认为，该利差可能进一步扩大至120个基点。</a></span></li>
+<li><span class="t">18:44</span><span class="x"><a href="https://finance.sina.cn/7x24/2026-09-18/detail-inisfyez0292166.d.html" target="_blank" rel="noopener">欧盟经济事务专员：债券收益率上升的影响将波及整个欧洲，欧盟必须将审慎财政政策列为优先事项。</a></span></li>
+<li><span class="t">18:44</span><span class="x"><a href="https://finance.sina.cn/7x24/2026-09-18/detail-inisfyex3519563.d.html" target="_blank" rel="noopener">【花旗：英央行调整QT带来的长端国债上涨或仅为一次性行情】花旗集团利率策略师杰米・瑟尔表示，英国央行全面调整量化紧缩（QT）计划后，英国国债由长端主导的上涨行情大概率只是 “一次性事件”。瑟尔在周四的研报中写道：“尽管这是对量化紧缩政策的重大调整，但在缩表节奏以及取消长期债券出售方面，基本符合市场预期。”英国央行周四宣布暂停出售长端国债后，英国国债收益率曲线呈现牛市平坦化，30 年期国债收益率当日下行 12 个基点。</a></span></li>
+<li><span class="t">18:41</span><span class="x"><a href="https://finance.sina.cn/7x24/2026-09-18/detail-inisfyex3517312.d.html" target="_blank" rel="noopener">【深交所：本周共对102起证券异常交易行为采取了自律监管措施】据深交所发布，2026年9月14日至9月18日，本所共对102起证券异常交易行为采取了自律监管措施，涉及盘中拉抬打压、虚假申报等异常交易情形；共对8起上市公司重大事项进行核查。本周，针对适当性管理履职不到位的情形，本所对一家会员采取了口头警示的监管措施。</a></span></li>
+<li><span class="t">18:22</span><span class="x"><a href="https://finance.sina.cn/7x24/2026-09-18/detail-inisfyex3499572.d.html" target="_blank" rel="noopener">【中国证监会拟对17起案件线索的“吹哨人”给予奖励】近日，中国证券投资者保护基金有限责任公司协助中国证监会办理“吹哨人”奖励申领登记事宜。自2026年9月18日至2026年12月18日，对深圳中青宝互动网络股份有限公司及李瑞杰、张云霞信息披露违法违规案（深圳证监局行政处罚决定书〔2025〕1号）等17起案件线索的“吹哨人”可登录中国证券投资者保护基金有限责任公司官方网站“吹哨人”奖励专栏办理奖励申领登记，逾期未按要求登记确认的，视为放弃奖励。（中国证监会）</a></span></li>
+<li><span class="t">17:51</span><span class="x"><a href="https://finance.sina.cn/7x24/2026-09-18/detail-inisfyex3470273.d.html" target="_blank" rel="noopener">【世联行：持股5%以上股东协议转让股份完成过户】世联行公告称，公司持股5%以上股东世联中国将其持有的1亿股公司股份（占总股本5.02%）通过协议转让方式转给前海诚域（代表诚域联盈5号私募证券投资基金），相关股份已于2026年9月17日完成过户登记。过户完成后，诚域联盈5号私募证券投资基金持有公司5.02%股份，成为持股5%以上股东；世联中国持股比例降至25.25%。本次转让总价款为2.08亿元，世联中国已于2026年8月31日收到第一期转让款1.04亿元。</a></span></li>
+<li><span class="t">17:41</span><span class="x"><a href="https://finance.sina.cn/7x24/2026-09-18/detail-inisfyez0232206.d.html" target="_blank" rel="noopener">挪威央行与财政部就货币政策监管达成一致。</a></span></li>
+<li><span class="t">17:34</span><span class="x"><a href="https://finance.sina.cn/7x24/2026-09-18/detail-inisfyez0226476.d.html" target="_blank" rel="noopener">【拓新药业：持股5%以上股东减持比例达1.0005%】拓新药业公告称，公司持股5%以上股东1461565安大略省公司因自身资金需求，于2026年9月8日至2026年9月17日通过大宗交易方式累计减持公司无限售条件A股股份126.61万股，占公司总股本的1.0005%。本次权益变动后，该股东持股比例由12.9973%降至11.9968%。本次减持系履行此前披露的减持计划，未违反相关法律法规，不会导致公司控制权变更，不会对公司治理结构及持续经营产生影响。</a></span></li>
+<li><span class="t">17:34</span><span class="x"><a href="https://finance.sina.cn/7x24/2026-09-18/detail-inisfyez0226048.d.html" target="_blank" rel="noopener">【日本央行加息难解经济困境】日本央行18日决定将政策利率从1.0%上调至1.25%，日本政策利率升至1995年以来最高水平。对此，日本经济学者表示，日本经济政策一定程度上受到美国影响，调整并非完全基于日本自身需要；而在此基础上高市内阁扶持防卫产业、扩充军费预算的行为，不仅无助于改善日本经济，也难以真正惠及普通民众。日本经济学者 植草一秀：高市内阁一直不愿意加息，因此放任日元持续贬值，我认为这实际上也等于帮助外资以低价购买日本资产。不过美国财政部长贝森特最近已经相当明确地调整了美元对日元政策方向，开始转向推动日元升值，原因在于美国一些大型基金已经基本完成了对日本资产的投资布局。（央视新闻）</a></span></li>
+<li><span class="t">17:31</span><span class="x"><a href="https://finance.sina.cn/7x24/2026-09-18/detail-inisfyex3451153.d.html" target="_blank" rel="noopener">【长江证券：中国建筑订单韧性突出，高股息下安全边际充分】长江证券研报指出，中国建筑订单韧性突出，高股息下安全边际充分。公司2026H1实现归属净利润230.00亿元，同比减少24.34%；单2季度归属净利润91.19亿元，同比减少40.74%。房建与基建收入下降，地产结算与海外收入增长；毛利率改善，费用率抬升及减值损失增加导致净利率下行。公司2026H1 新签合同额24,647亿元，同比仅下降1.5%，工业厂房新签同比增长24.2%，数据中心及算力中心新签同比大幅增长328.3%。2026年公司订单目标4.6万亿元（同比+1%），营业收入2.1万亿元（同比+1%），总体经营稳健。公司保持长期稳定的分红政策，2026年5月股东会决议派发每股0.2718元（含税），与2023-2025 年保持基本稳定，股息率达6%，安全边际充分。</a></span></li></ul></div>
+  </div>
+
+  
+  <div class="nsec">
+    <div class="nh"><b>出海大事</b><span>外贸 · 跨境 · 反倾销 · 出海</span></div>
+    <div class="card"><ul class="nlist"><li><span class="t">18:12</span><span class="x"><a href="https://finance.sina.cn/7x24/2026-09-18/detail-inisfyex3489324.d.html" target="_blank" rel="noopener">【精度1米展位级导航将首次覆盖广交会全馆】第140届中国进出口商品交易会（广交会）将于10月15日至11月4日在广州举办。中国对外贸易中心主任朱咏9月18日在国务院新闻办新闻发布会上介绍，本届广交会上线了16个数智化系统，将展馆内的智慧应用场景增加到22项。全实景的展位级导航精度到1米，首次覆盖了全馆。(新华社)</a></span></li>
+<li><span class="t">18:46</span><span class="x"><a href="https://finance.sina.cn/7x24/2026-09-18/detail-inisfyex3522338.d.html" target="_blank" rel="noopener">【惠康科技：当前公司出口美国的关税税率为35%】惠康科技9月18日在证券公司策略会上表示，当前公司出口美国的关税税率为35%，较2025年4月峰值时的170%已显著回落，关税压力明显缓解。未来，公司将持续关注贸易摩擦、关税政策及汇率波动对海外业务的影响，一方面将通过优化客户结构、提升产品附加值来增强议价能力，另一方面也在积极推进海外产能布局，目前公司已完成向境外全资子公司的增资，泰国制冷设备智能制造生产基地项目进展顺利，待项目投产后，将有效发挥其在供应链韧性和贸易灵活性的优势，分散单一市场风险，保障公司海外业务的持续健康发展。</a></span></li>
+<li><span class="t">20:13</span><span class="x"><a href="https://finance.sina.cn/7x24/2026-09-18/detail-inishenv3459652.d.html" target="_blank" rel="noopener">【文旅部：优化升级文化产品贸易，大力发展文化服务贸易，创新发展数字文化贸易，提升高附加值文化产品和服务在对外文化贸易中的比重】近日，文化和旅游部发布《文化产业发展“十五五”规划》。其中提到，促进对外文化贸易增量提质。优化升级文化产品贸易，大力发展文化服务贸易，创新发展数字文化贸易，提升高附加值文化产品和服务在对外文化贸易中的比重。鼓励文化企业国际化经营，支持企业完善品牌打造、产品制作、海外销售渠道，推出更多适应国际市场需求、具有文化内涵的产品。巩固数字文化领域出海竞争优势，挖掘演艺、动漫、创意设计、国潮文创等领域出口潜力，提升工艺美术、舞台装备、游戏游艺设备等产品出口附加值。推动“走出去”与“引进来”相结合，支持引进国外优秀文化产品与服务。</a></span></li>
+<li><span class="t">09:37</span><span class="x"><a href="https://finance.sina.cn/7x24/2026-09-19/detail-inisinhh9926845.d.html" target="_blank" rel="noopener">【重庆跨境电商经营主体超2万家】9月18日，2026重庆跨境电商交易会在重庆国际会议展览中心（南坪）开幕。记者从现场了解到，截至目前，全市跨境电商经营主体已超2万家；2025年，全市跨境电商进出口额达368.03亿元。 自2016年获批全国第二批跨境电商综合试验区以来，重庆跨境电商政策体系逐步完善，产业生态持续优化。今年1—7月，全市跨境电商进出口额达211.8亿元，同比增长5.21%。（重庆日报）</a></span></li>
+<li><span class="t">07:45</span><span class="x"><a href="https://finance.sina.cn/7x24/2026-09-20/detail-inismkxi2681791.d.html" target="_blank" rel="noopener">【中进汽贸签署三方合作备忘录 进一步拓展中东市场】据国机汽车公众号消息，近日，国机汽车下属企业中进汽贸与卡塔尔Al Hamad Automobiles W.L.L.及Sunridge Group Limited（HK）共同签署《合作备忘录》，三方达成共识，将围绕汽车出海及跨境供应链相关领域开展全方位合作。此次合作备忘录的签署，是中进汽贸进一步拓展中东市场、优化海外业务布局的重要举措。</a></span></li>
+<li><span class="t">09:23</span><span class="x"><a href="https://finance.sina.cn/7x24/2026-09-20/detail-inismrff2614370.d.html" target="_blank" rel="noopener">【浙商证券：维持比亚迪“买入”评级，闪充开启释放上行周期】浙商证券研报指出，比亚迪闪充开启释放上行周期，关税扰动不改趋势明确。2026M3-M8，公司闪充车型月销量由2.44万辆提升至10.86万辆，占内销比重由13.56%升至43.29%，闪充占比提升逐步成为国内销量的重要支撑。伴随闪充车型矩阵持续扩容，公司批发及新能源批发市占率分别从底部回升至18.5%/29.2%，ASP 进入修复通道，国内基本面向上趋势逐步明确。海外销量与份额同步提升，多区域接力及本地化布局支撑增长持续。后续出口退税或欧洲贸易政策发生调整，本地化布局亦能够部分缓释其对销量及盈利的影响，增强海外业务的持续增长能力与经营韧性，进一步缓释关税及贸易政策扰动。随着经营基本面拐点逐步确认，公司盈利与估值均具备明确向上修复空间，超跌调整后的配置机会值得重点关注，此外，关注公司制造平台型技术泛化能力，打开后续潜在成长想象空间。维持“买入”评级。</a></span></li>
+<li><span class="t">10:14</span><span class="x"><a href="https://finance.sina.cn/7x24/2026-09-20/detail-inismvpc2531852.d.html" target="_blank" rel="noopener">【国产医疗机器人商业化换挡提速】中国经济信息社刊发的《中经社信号|国产医疗机器人商业化换挡提速》报道称，在北京举办的一场大型展会现场，一台国产骨科手术机器人的机械臂缓缓移动，在骨骼模型上精准完成定位与模拟手术操作，旁边的屏幕上，三维手术规划实时呈现。展会上，国产医疗机器人备受关注；展会外，其商业化进程换挡提速。海关总署数据显示，今年上半年我国手术机器人出口4.8亿元，同比增长3.3倍，出口市场由2025年同期的23个增加至49个；在公立医院腔镜机器人招投标市场上，今年上半年国产品牌中标量占比63%，超过进口品牌；机构预计，未来5年我国手术机器人市场复合增长率有望达33.3%，将明显高于全球水平。这三组数据，同时勾勒出一条上扬的市场曲线。国产医疗机器人迎来的不是某一项技术的单点突破，而是从出海放量到细分领域反超、从规模扩容到头部企业盈利兑现的多维提速，步入商业化加速落地的关键期。（新华社）</a></span></li>
+<li><span class="t">10:41</span><span class="x"><a href="https://finance.sina.cn/7x24/2026-09-20/detail-inismvpe9327626.d.html" target="_blank" rel="noopener">【国家税务总局：今年资本市场总体较为活跃，带动相关税种、行业税收较快增长】税收数据显示，今年前8个月，税务部门征收税收收入（不含海关代征进口增值税、消费税和关税、船舶吨税，未扣除出口退税）同比增长5.9%，与上半年现价GDP增速5.4%相比，略高出0.5个百分点。国家税务总局税收科学研究所所长黄立新认为，税收收入按现价计算，今年以来税收增长总体上与经济增长基本相匹配，主要有三方面因素使税收增速略快于GDP增速。（中证金牛座）</a></span></li>
+<li><span class="t">14:44</span><span class="x"><a href="https://finance.sina.cn/7x24/2026-09-20/detail-inisnhax2473479.d.html" target="_blank" rel="noopener">【今年前8个月深圳进出口总额3.99万亿元 同比增长35.2%】据海关统计，今年前8个月，深圳市累计进出口3.99万亿元人民币，较去年同期增长35.2%。其中，出口2.07万亿元，增长15.6%；进口1.92万亿元，增长65.5%。</a></span></li>
+<li><span class="t">19:39</span><span class="x"><a href="https://finance.sina.cn/7x24/2026-09-18/detail-inishenx0207378.d.html" target="_blank" rel="noopener">【富国银行：美国经济韧性抬高利率底部 美联储年内料再加息一次】富国银行最新美国经济展望指出，美国增长仍具韧性，预计三季度实际GDP年化增长3.0%，主要由消费和企业投资支撑。8月零售销售环比增长1.2%，该行预计三季度实际消费年化增长约3.2%。不过，进口强劲可能令净出口拖累GDP近2个百分点。货币政策方面，该行预计美联储年内再加息一次，将利率升至4.00%-4.25%，2027年维持不变。由于通胀超标主要由供给因素推动、就业市场并未过热，更激进紧缩的理由有限。</a></span></li>
+<li><span class="t">21:37</span><span class="x"><a href="https://finance.sina.cn/7x24/2026-09-18/detail-inishenx0296990.d.html" target="_blank" rel="noopener">【商务部新闻发言人就媒体称欧盟希中国自愿限制混动汽车对欧出口答记者问】问：近日，有媒体报道，欧盟希中方自愿限制混动汽车对欧出口，否则可能面临更高关税，请问中方对此有何评论？ 答：中方注意到有关报道。所谓自愿出口限制严重违反世贸组织规则，违背市场经济规律和公平竞争原则。中方对此坚决反对。中方的立场是一贯的，中欧之间的任何解决方案必须确保利益平衡，必须符合世贸组织规则和各自国内法律，并充分照顾双方业界利益。（商务部）</a></span></li>
+<li><span class="t">22:22</span><span class="x"><a href="https://finance.sina.cn/7x24/2026-09-18/detail-inishkut3430284.d.html" target="_blank" rel="noopener">【中国—塔吉克斯坦政府间经贸合作委员会第十四次会议在杜尚别召开】商务部副部长兼国际贸易谈判副代表凌激18日与塔吉克斯坦经济发展和贸易部部长阿卜杜拉赫蒙佐达在杜尚别市共同主持召开中塔政府间经贸合作委员会第十四次会议。凌激表示，两国元首今年5月举行会晤，为深化各领域合作指明方向。中方愿与塔方一道，积极落实《2030年前中塔经贸合作规划》，加快培育服务贸易、数字贸易、跨境电商等新业态。欢迎塔方产品走进中国大市场。推动新版《中塔投资协定》赋能投资合作，发掘绿色矿产、清洁能源、数字经济、互联互通等领域合作潜能，鼓励开展灵活多样的投融资合作。扩大边境地方间经贸往来，希望塔政府为中资企业提供公正、透明、法治营商环境。加强中国—中亚机制框架下合作，推动贸易投资自由化便利化。</a></span></li>
+<li><span class="t">22:58</span><span class="x"><a href="https://finance.sina.cn/7x24/2026-09-18/detail-inishkuv0231668.d.html" target="_blank" rel="noopener">欧盟官方公报称，欧盟拟对进口电工钢征收临时保障措施关税。</a></span></li>
+<li><span class="t">00:27</span><span class="x"><a href="https://finance.sina.cn/7x24/2026-09-19/detail-inishrat0153167.d.html" target="_blank" rel="noopener">【大量铜材涌入美国，新奥尔良港口陷入拥堵】利比里亚籍散货船 “诺德・诺福克” 号正横渡大西洋驶向新奥尔良，船上装载价值约 5 亿美元的非洲产铜，是数据分析机构 Kpler 有记录以来，单批次大宗商品货船市场价值最高的一船货物。知情人士称，新奥尔良港是重要金属中转口岸，也是芝商所旗下 COMEX 铜仓库的核心枢纽，目前港口库容已基本饱和。据悉，9 月和 10 月还将有约 10 万吨非洲与南美产铜陆续到港。美国铜进口需求旺盛，是推动铜价创纪录大涨的核心动力。自去年 2 月特朗普首次正式提议对铜征收关税以来，伦敦金属交易所的全球基准铜价上涨约 50%。但近几周，市场愈发怀疑特朗普最终是否会落实关税，美国际铜价价差随之收窄。一项指标显示，当前套利价差为每吨 169 美元，年内峰值曾达每吨 789 美元。随着美国仓储需求激增，仓储企业正向 COMEX 申请新增库容。交易所称，2025 年初至今，已新增 20 座仓库，铜存储容量增加近 72.5 万短吨，约等于美国精炼铜年消费量的 39%。</a></span></li>
+<li><span class="t">07:23</span><span class="x">【经济日报金观平：莫以产能过剩之名行贸易保护之实】近期，一些海外机构持续炒作中国新能源、高端制造等领域所谓的“产能过剩”，别有用心地将中国产业规模优势歪曲为市场失衡，并以此为借口出台贸易限制、关税壁垒等措施。本质上看，这种给中国产能贴标签的做法，不过是部分国家或经济体为维护自身产业地位、遏制中国产业升级而炮制的舆论工具罢了。中国在光伏、动力电池、新能源汽车等领域形成的产能规模，并非无序扩张的过剩产能，而是精准匹配全球绿色转型需求、经过市场充分竞争形成的有效产能、优质产能。在全球低碳转型提速、各国新能源替代需求持续释放的背景下，中国依托完整制造业门类、高效供应链和持续创新能力，形成的这些性价比高、具有国际竞争力的优势产业，不仅满足了自身经济社会发展需要，也承接住了全球市场的增量需求，契合经济全球化与国际市场分工的内在要求。</span></li></ul></div>
+  </div>
+
+
+  <div class="srcbox">
+    数据来源：新浪财经 7×24 全球实时财经快讯（公开接口）<br>
+    覆盖范围：2026-09-18 17:31:35 ~ 2026-09-20 23:43:16　·　按关键词自动分流，每日更新
+  </div>
+</main>
+<script>
+(function () {
+  var ua = navigator.userAgent || '';
+  var fb = document.getElementById('static-fallback');
+  if (fb) { fb.style.display = 'none'; }
+  if (/MicroMessenger/i.test(ua) && !document.getElementById('wxbar')) {
+    document.body.classList.add('wx');
+    var bar = document.createElement('div');
+    bar.id = 'wxbar';
+    bar.innerHTML = '如页面显示不完整，请点右上角 <b>···</b> → 选择 <b>「在浏览器打开」</b>';
+    document.body.appendChild(bar);
+  }
+})();
+</script>
+
+</body></html>

@@ -1,0 +1,96 @@
+{
+  "generated_at": "2026-09-20T18:59:17+08:00",
+  "as_of": "2026-09-20 18:59",
+  "items": [
+    {
+      "id": "sh",
+      "name": "上证指数",
+      "value": "3,911.87",
+      "unit": "点",
+      "chg_text": "+0.94%",
+      "chg_sign": 1,
+      "sub": "+36.27",
+      "kind": "index"
+    },
+    {
+      "id": "hs300",
+      "name": "沪深300",
+      "value": "4,507.39",
+      "unit": "点",
+      "chg_text": "+1.06%",
+      "chg_sign": 1,
+      "sub": "+47.24",
+      "kind": "index"
+    },
+    {
+      "id": "hsi",
+      "name": "恒生指数",
+      "value": "24,750.78",
+      "unit": "点",
+      "chg_text": "+0.60%",
+      "chg_sign": 1,
+      "sub": "+146.49",
+      "kind": "index"
+    },
+    {
+      "id": "cgb10y",
+      "name": "10 年期国债收益率",
+      "value": "1.68",
+      "unit": "%",
+      "chg_text": "-0.0bp",
+      "chg_sign": -1,
+      "sub": "截至 2026-09-20",
+      "kind": "rate"
+    },
+    {
+      "id": "margin",
+      "name": "两融余额",
+      "value": "2.64",
+      "unit": "万亿元",
+      "chg_text": null,
+      "chg_sign": 0,
+      "sub": "截至 2026-09-17",
+      "kind": "amount"
+    },
+    {
+      "id": "usdcny",
+      "name": "美元兑人民币",
+      "value": "6.7521",
+      "unit": "",
+      "chg_text": "-0.0059",
+      "chg_sign": -1,
+      "sub": "中间价 2026-09-18",
+      "kind": "fx"
+    },
+    {
+      "id": "spread",
+      "name": "10Y − 2Y 期限利差",
+      "value": "0.43",
+      "unit": "个百分点",
+      "chg_text": null,
+      "chg_sign": 0,
+      "sub": "截至 2026-09-20",
+      "kind": "spread"
+    }
+  ],
+  "cgb": {
+    "date": "2026-09-20",
+    "y10": 1.6818,
+    "y2": 1.2538,
+    "y10_chg_bp": -0.02,
+    "y10_prev_date": "2026-09-18",
+    "spread_10y2y": 0.428
+  },
+  "margin": {
+    "date": "2026-09-17",
+    "total": 2639097998052.0,
+    "rzye": 2609863623661.0,
+    "rqye": 29234374391.0
+  },
+  "fx": {
+    "date": "2026-09-18",
+    "value": 6.7521,
+    "prev": 6.758,
+    "chg": -0.0059
+  }
+}

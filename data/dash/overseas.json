@@ -1,0 +1,477 @@
+{
+  "meta": {
+    "title": "出海情报 · 英国电动车市场",
+    "data_date": "2026-09-20",
+    "generated_at": "2026-09-20T18:59:54+08:00",
+    "scope": "英国（UK）乘用车注册 · 来源 SMMT 官方公开页",
+    "subject": "BYD DOLPHIN SURF（紧凑型纯电城市车）",
+    "note": "注册量 ≠ 销量 ≠ 交付量。品牌级 ≠ 车型级。SMMT 免费公开页仅提供车型 Top10。单一权威来源，尚未独立交叉验证。"
+  },
+  "market": {
+    "total_month": 94236.0,
+    "total_ytd": 1388735.0,
+    "bev_month": 28063.0,
+    "bev_share": 29.8,
+    "bev_share_prev": 26.5,
+    "bev_yoy": 27.7,
+    "bev_ytd": 355746.0,
+    "phev_share": 14.5,
+    "petrol_share": 38.3
+  },
+  "powertrain": [
+    {
+      "key": "BEV",
+      "units": 28063.0,
+      "share": 29.8,
+      "share_prev": 26.5,
+      "yoy": 27.7
+    },
+    {
+      "key": "HEV",
+      "units": 11940.0,
+      "share": 12.7,
+      "share_prev": 11.4,
+      "yoy": 26.3
+    },
+    {
+      "key": "PHEV",
+      "units": 13707.0,
+      "share": 14.5,
+      "share_prev": 11.8,
+      "yoy": 39.8
+    },
+    {
+      "key": "PETROL",
+      "units": 36048.0,
+      "share": 38.3,
+      "share_prev": 45.1,
+      "yoy": -3.5
+    },
+    {
+      "key": "DIESEL",
+      "units": 4478.0,
+      "share": 4.8,
+      "share_prev": 5.2,
+      "yoy": 4.0
+    }
+  ],
+  "powertrainYtd": [
+    {
+      "key": "BEV",
+      "units": 355746.0,
+      "share": 25.62,
+      "share_prev": 21.86,
+      "yoy": 28.6
+    },
+    {
+      "key": "HEV",
+      "units": 194327.0,
+      "share": 13.99,
+      "share_prev": 13.81,
+      "yoy": 11.2
+    },
+    {
+      "key": "PHEV",
+      "units": 185198.0,
+      "share": 13.34,
+      "share_prev": 10.62,
+      "yoy": 37.9
+    },
+    {
+      "key": "PETROL",
+      "units": 589842.0,
+      "share": 42.47,
+      "share_prev": 48.09,
+      "yoy": -3.1
+    },
+    {
+      "key": "DIESEL",
+      "units": 63622.0,
+      "share": 4.58,
+      "share_prev": 5.62,
+      "yoy": -10.5
+    }
+  ],
+  "channel": [
+    {
+      "key": "PRIVATE",
+      "units": 38460.0,
+      "share": 40.8,
+      "share_prev": 39.0,
+      "yoy": 19.0
+    },
+    {
+      "key": "FLEET",
+      "units": 53934.0,
+      "share": 57.2,
+      "share_prev": 59.1,
+      "yoy": 10.1
+    },
+    {
+      "key": "BUSINESS",
+      "units": 1842.0,
+      "share": 2.0,
+      "share_prev": 1.9,
+      "yoy": 14.5
+    }
+  ],
+  "channelYtd": [
+    {
+      "key": "PRIVATE",
+      "units": 546798.0,
+      "share": 39.4,
+      "share_prev": 38.4,
+      "yoy": 12.5
+    },
+    {
+      "key": "FLEET",
+      "units": 809511.0,
+      "share": 58.3,
+      "share_prev": 59.4,
+      "yoy": 7.6
+    },
+    {
+      "key": "BUSINESS",
+      "units": 32426.0,
+      "share": 2.3,
+      "share_prev": 2.2,
+      "yoy": 18.8
+    }
+  ],
+  "cn_brands": [
+    {
+      "brand": "Mg",
+      "units": 4960.0,
+      "share": 5.26,
+      "yoy": 93.52,
+      "ytd": 60904.0
+    },
+    {
+      "brand": "Jaecoo",
+      "units": 4022.0,
+      "share": 4.27,
+      "yoy": 194.22,
+      "ytd": 43591.0
+    },
+    {
+      "brand": "Byd",
+      "units": 3867.0,
+      "share": 4.1,
+      "yoy": 119.84,
+      "ytd": 48265.0
+    },
+    {
+      "brand": "Chery",
+      "units": 2380.0,
+      "share": 2.53,
+      "yoy": 18207.69,
+      "ytd": 23571.0
+    },
+    {
+      "brand": "Omoda",
+      "units": 2216.0,
+      "share": 2.35,
+      "yoy": 104.24,
+      "ytd": 24380.0
+    },
+    {
+      "brand": "Geely",
+      "units": 1085.0,
+      "share": 1.15,
+      "yoy": 0.0,
+      "ytd": 9245.0
+    },
+    {
+      "brand": "Leapmotor",
+      "units": 965.0,
+      "share": 1.02,
+      "yoy": 274.03,
+      "ytd": 9340.0
+    },
+    {
+      "brand": "Xpeng",
+      "units": 174.0,
+      "share": 0.18,
+      "yoy": 216.36,
+      "ytd": 1104.0
+    },
+    {
+      "brand": "Changan",
+      "units": 143.0,
+      "share": 0.15,
+      "yoy": 0.0,
+      "ytd": 2091.0
+    },
+    {
+      "brand": "Aion",
+      "units": 6.0,
+      "share": 0.01,
+      "yoy": 0.0,
+      "ytd": 246.0
+    },
+    {
+      "brand": "Gwm",
+      "units": 1.0,
+      "share": 0.0,
+      "yoy": -94.12,
+      "ytd": 152.0
+    }
+  ],
+  "top_brands": [
+    {
+      "brand": "Grand Total",
+      "units": 94236.0,
+      "share": 100.0,
+      "yoy": 13.66
+    },
+    {
+      "brand": "Volkswagen",
+      "units": 7626.0,
+      "share": 8.09,
+      "yoy": -3.05
+    },
+    {
+      "brand": "Ford",
+      "units": 5152.0,
+      "share": 5.47,
+      "yoy": -8.28
+    },
+    {
+      "brand": "Mg",
+      "units": 4960.0,
+      "share": 5.26,
+      "yoy": 93.52
+    },
+    {
+      "brand": "Bmw",
+      "units": 4939.0,
+      "share": 5.24,
+      "yoy": -5.02
+    },
+    {
+      "brand": "Kia",
+      "units": 4919.0,
+      "share": 5.22,
+      "yoy": 19.71
+    },
+    {
+      "brand": "Mercedes",
+      "units": 4762.0,
+      "share": 5.05,
+      "yoy": 4.64
+    },
+    {
+      "brand": "Audi",
+      "units": 4590.0,
+      "share": 4.87,
+      "yoy": -4.77
+    },
+    {
+      "brand": "Skoda",
+      "units": 4362.0,
+      "share": 4.63,
+      "yoy": 18.15
+    },
+    {
+      "brand": "Toyota",
+      "units": 4116.0,
+      "share": 4.37,
+      "yoy": 26.45
+    },
+    {
+      "brand": "Jaecoo",
+      "units": 4022.0,
+      "share": 4.27,
+      "yoy": 194.22
+    },
+    {
+      "brand": "Byd",
+      "units": 3867.0,
+      "share": 4.1,
+      "yoy": 119.84
+    },
+    {
+      "brand": "Vauxhall",
+      "units": 3659.0,
+      "share": 3.88,
+      "yoy": 34.47
+    },
+    {
+      "brand": "Renault",
+      "units": 2906.0,
+      "share": 3.08,
+      "yoy": 12.68
+    },
+    {
+      "brand": "Peugeot",
+      "units": 2848.0,
+      "share": 3.02,
+      "yoy": -25.33
+    }
+  ],
+  "bev_top10": [
+    {
+      "rank": 1,
+      "model": "TESLA model 3",
+      "units": 1296
+    },
+    {
+      "rank": 2,
+      "model": "TESLA model Y",
+      "units": 884
+    },
+    {
+      "rank": 3,
+      "model": "VAUXHALL Frontera",
+      "units": 875
+    },
+    {
+      "rank": 4,
+      "model": "JAECOO E5",
+      "units": 855
+    },
+    {
+      "rank": 5,
+      "model": "MERCEDES-Benz CLA",
+      "units": 821
+    },
+    {
+      "rank": 6,
+      "model": "SKODA Enyaq",
+      "units": 807
+    },
+    {
+      "rank": 7,
+      "model": "SKODA elroq",
+      "units": 805
+    },
+    {
+      "rank": 8,
+      "model": "RENAULT 5",
+      "units": 736
+    },
+    {
+      "rank": 9,
+      "model": "KIA EV3",
+      "units": 735
+    },
+    {
+      "rank": 10,
+      "model": "Audi Q6 e-tron",
+      "units": 603
+    }
+  ],
+  "all_top10": [
+    {
+      "rank": 1,
+      "model": "FORD puma",
+      "units": 35968
+    },
+    {
+      "rank": 2,
+      "model": "KIA sportage",
+      "units": 30564
+    },
+    {
+      "rank": 3,
+      "model": "JAECOO 7",
+      "units": 28571
+    },
+    {
+      "rank": 4,
+      "model": "NISSAN qashqai",
+      "units": 27528
+    },
+    {
+      "rank": 5,
+      "model": "VAUXHALL corsa",
+      "units": 21892
+    },
+    {
+      "rank": 6,
+      "model": "MG hs",
+      "units": 21209
+    },
+    {
+      "rank": 7,
+      "model": "VOLKSWAGEN golf",
+      "units": 21206
+    },
+    {
+      "rank": 8,
+      "model": "MINI cooper",
+      "units": 20017
+    },
+    {
+      "rank": 9,
+      "model": "VOLVO XC40",
+      "units": 18907
+    },
+    {
+      "rank": 10,
+      "model": "VOLKSWAGEN Tiguan",
+      "units": 18125
+    }
+  ],
+  "competitors": [
+    {
+      "model": "BYD DOLPHIN SURF",
+      "ok": true,
+      "url": "https://www.byd.com/uk/electric-cars/dolphin-surf",
+      "range_miles": [
+        "200"
+      ],
+      "battery_kwh": []
+    },
+    {
+      "model": "Renault 5 E-Tech electric",
+      "ok": true,
+      "url": "https://www.renault.co.uk/electric-vehicles/r5-e-tech-electric.html",
+      "range_miles": [
+        "194",
+        "250",
+        "252"
+      ],
+      "battery_kwh": [
+        "40",
+        "52"
+      ]
+    },
+    {
+      "model": "MG4 EV",
+      "ok": true,
+      "url": "https://www.mg.co.uk/new-cars/mg4-ev",
+      "range_miles": [
+        "338"
+      ],
+      "battery_kwh": [
+        "64",
+        "77"
+      ]
+    },
+    {
+      "model": "Dacia Spring Electric",
+      "ok": true,
+      "url": "https://www.dacia.co.uk/hybrid-range/spring-electric.html",
+      "range_miles": [],
+      "battery_kwh": []
+    }
+  ],
+  "not_retrieved": [
+    {
+      "item": "BYD DOLPHIN SURF 英国官方售价 / PCP 月供",
+      "reason": "官网价格与月供由前端动态渲染，静态请求无法取得",
+      "source_id": "S-BY-02",
+      "url": "https://www.byd.com/uk/purchase/pcp-uk",
+      "status": "not_retrieved",
+      "action": "需人工打开页面读取，或后续引入浏览器渲染采集"
+    },
+    {
+      "item": "完整车型级注册量（非 Top10）",
+      "reason": "SMMT 免费公开页只提供 Top10 车型",
+      "source_id": "S-SM-01",
+      "status": "restricted",
+      "action": "不购买付费数据；在结论中明确车型级不可得"
+    }
+  ]
+}
