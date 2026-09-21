@@ -1,0 +1,52 @@
+name: 每日数据更新
+
+on:
+  schedule:
+    # 每天北京时间 12:00（UTC 04:00）自动跑一次
+    - cron: '0 4 * * *'
+  # 也允许在 GitHub 网页上手动点一下「Run workflow」立刻更新
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 拉取仓库
+        uses: actions/checkout@v4
+
+      - name: 配置 Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: 安装依赖
+        run: |
+          python -m pip install --upgrade pip
+          pip install plotly pillow
+
+      - name: 抓取实时数据（失败不中断，保留上次结果）
+        run: |
+          python src/market_rt.py  || echo "[跳过] 行情接口未取到"
+          python src/finvoice.py   || echo "[跳过] 曲线接口未取到"
+          python src/news_fetch.py || echo "[跳过] 新闻接口未取到"
+
+      - name: 重新生成三个页面
+        run: |
+          python src/build_unified.py
+          python src/build_index_v2.py
+          python src/build_news.py
+
+      - name: 提交更新
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --quiet && git diff --staged --quiet; then
+            echo "本次无数据变化，跳过提交"
+          else
+            git commit -m "chore: 每日数据更新 $(date -u +'%Y-%m-%d %H:%M UTC')"
+            git push
+          fi
