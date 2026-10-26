@@ -422,6 +422,8 @@ main{max-width:960px}
   color:var(--muted)}
 .site-foot a{color:var(--muted);text-decoration:none}
 .site-foot a:hover{color:var(--red)}
+.site-foot .contact-link{color:var(--red);font-weight:750;font-size:12.5px}
+.site-foot .contact-link:hover{color:var(--ink);text-decoration:underline}
 .jump{grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:30px}
 .jump button{border-radius:10px;padding:15px 16px;text-align:left;background:var(--surface)}
 .jump button b{font-size:13px}
@@ -506,7 +508,7 @@ HTML = """<!DOCTYPE html>
   <noscript><div id="static-fallback">__STATIC__</div></noscript>
   <footer class="site-foot">
     <span>© 2026 刘柏廷 · Evo</span>
-    <a href="contact.html">联系我 · 留言 →</a>
+    <a class="contact-link" href="contact.html">联系我 · 留言 →</a>
   </footer>
 </main>
 <div class="lb" id="lb"><img id="lb-img" alt="证书"></div>
