@@ -17,3 +17,7 @@ exports/
 # 不上传打包文件与临时文件
 *.zip
 *.log
+
+# WorkBuddy 本地应用标记与运行状态
+.workbuddy/
+.wbapp_*.genie
