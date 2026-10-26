@@ -34,6 +34,23 @@ CLOUD_CONFIG = {
     "endpoint": "https://boting-portfolio.app.workbuddy.host",
     "publishableKey": "wbpk_DS2QvHJ5JtCoa6o0UckLhW_YIEhhz0TFVtIbc9hJrEMHyYylamVfo44",
 }
+CERT_DIR = ROOT / "assets" / "certs"
+IMG_MTIME = (ROOT / "build" / "images.json").stat().st_mtime
+
+
+def cert_uri(key: str, data_uri: str) -> str:
+    """把证书 JPEG 从 HTML 里拆出来，按 720px / WebP 缓存到 assets/certs。"""
+    if not data_uri.startswith("data:image/"):
+        return data_uri
+    out = CERT_DIR / f"{key}.webp"
+    if not out.exists() or out.stat().st_mtime < IMG_MTIME:
+        _, b64 = data_uri.split(",", 1)
+        im = Image.open(io.BytesIO(base64.b64decode(b64))).convert("RGB")
+        if im.width > 720:
+            im = im.resize((720, max(1, round(im.height * 720 / im.width))), Image.LANCZOS)
+        out.parent.mkdir(parents=True, exist_ok=True)
+        im.save(out, "WEBP", quality=70, method=6)
+    return out.relative_to(ROOT).as_posix()
 
 SKIP = {"photo", "photo_extra"}
 
@@ -510,7 +527,6 @@ HTML = """<!DOCTYPE html>
 <div class="lb" id="lb"><img id="lb-img" alt="证书"></div>
 
 __WXJS__
-<script src="https://cdn.jsdelivr.net/npm/@tencent-ai/workbuddy-cloud-sdk@dev/lib/index.global.js"></script>
 <script>
 const AV=__AVATAR__, D=__DATA__, CLOUD_CFG=__CLOUD_CONFIG__;
 const THEMES=[["warm-paper","暖纸"],["ink-night","夜墨"],["mist-blue","雾蓝"],
@@ -587,9 +603,22 @@ document.getElementById("v-home").innerHTML=`
     <button onclick="location.href='dashboard.html'"><b>数据看板 →</b><span>金融优先 · 出海补充</span></button>
   </div>`;
 
-let cloudClient=null;
-function getCloudClient(){
+let cloudClient=null, cloudLoader=null;
+function loadCloudSdk(){
+  if(window.WorkBuddyCloud)return Promise.resolve();
+  if(cloudLoader)return cloudLoader;
+  cloudLoader=new Promise((resolve,reject)=>{
+    const s=document.createElement("script");
+    s.src="https://cdn.jsdelivr.net/npm/@tencent-ai/workbuddy-cloud-sdk@dev/lib/index.global.js";
+    s.onload=resolve;
+    s.onerror=()=>{cloudLoader=null;reject(new Error("CLOUD_SDK_UNAVAILABLE"));};
+    document.head.appendChild(s);
+  });
+  return cloudLoader;
+}
+async function getCloudClient(){
   if(cloudClient) return cloudClient;
+  await loadCloudSdk();
   const factory=window.WorkBuddyCloud&&window.WorkBuddyCloud.createWorkBuddyCloud;
   if(!factory) throw new Error("CLOUD_SDK_UNAVAILABLE");
   cloudClient=factory({endpoint:CLOUD_CFG.endpoint, publishableKey:CLOUD_CFG.publishableKey});
@@ -624,7 +653,7 @@ contactForm.addEventListener("submit", async (event)=>{
   const btn=contactForm.querySelector('button[type="submit"]');
   btn.disabled=true; btn.textContent="发送中…"; setContactStatus("正在发送…","");
   try{
-    const cloud=getCloudClient();
+    const cloud=await getCloudClient();
     const {error}=await cloud.database.from("contact_messages").insert({
       name:name, contact:contact||null, message:message, source_page:"home"
     });
@@ -673,9 +702,15 @@ document.getElementById("v-cert").innerHTML=`
 
 const cg=document.getElementById("cg");
 cg.innerHTML=D.certs.map((c,i)=>`<div class="shot" data-i="${i}" role="button" tabindex="0" aria-label="${c.name}">
-  <div class="ph"><img src="${c.uri}" alt="${c.name}" loading="lazy"></div>
+  <div class="ph"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==" data-src="${c.uri}" alt="${c.name}" loading="lazy" decoding="async"></div>
   <div class="cap"><b>${c.name}</b>${(c.issuer||[]).map(x=>`<span class="is">${x}</span>`).join("")}<span class="dt">${c.date}</span></div>
 </div>`).join("");
+function loadCertImages(){
+  document.querySelectorAll("#cg img[data-src]").forEach(img=>{
+    const src=img.getAttribute("data-src");
+    if(src){img.src=src;img.removeAttribute("data-src");}
+  });
+}
 const lb=document.getElementById("lb"),lbI=document.getElementById("lb-img");
 function op(i){lbI.src=D.certs[i].uri;lb.classList.add("on");}
 cg.addEventListener("click",e=>{const s=e.target.closest(".shot");if(s)op(+s.dataset.i);});
@@ -691,6 +726,7 @@ document.addEventListener("click",e=>{const t=e.target.closest("[data-p]");
 function go(v){
   document.querySelectorAll(".view").forEach(s=>s.classList.toggle("on",s.id==="v-"+v));
   document.querySelectorAll(".tabs button[data-v]").forEach(b=>b.setAttribute("aria-selected",String(b.dataset.v===v)));
+  if(v==="cert")loadCertImages();
   try{localStorage.setItem(VK,v)}catch(e){}
   window.scrollTo(0,0);
 }
@@ -873,7 +909,8 @@ def main() -> None:
             continue
         name, issuers, when = cert_meta[c["key"]]
         certs.append({"name": name, "issuer": issuers,
-                      "date": when, "uri": c["uri"], "ratio": round(c["w"] / c["h"], 3)})
+                      "date": when, "uri": cert_uri(c["key"], c["uri"]),
+                      "ratio": round(c["w"] / c["h"], 3)})
 
     data = {
         "meta": {"page_updated": now_cst().strftime("%Y.%m.%d")},
