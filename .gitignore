@@ -1,0 +1,19 @@
+# Python
+.venv/
+__pycache__/
+*.py[cod]
+
+# macOS
+.DS_Store
+
+# 本地采集缓存与中间产物（GitHub Actions 会重新抓取）
+data/cache/
+data/raw/
+data/processed/
+data/state/
+checks/
+exports/
+
+# 不上传打包文件与临时文件
+*.zip
+*.log

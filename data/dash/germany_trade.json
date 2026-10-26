@@ -1,0 +1,96 @@
+{
+  "generated_at": "2026-10-26T15:51:41+08:00",
+  "as_of": "2026-10-26 15:51",
+  "latest_month": "2026-08",
+  "months": [
+    {
+      "period": "202510",
+      "label": "2025-10",
+      "world_usd": 27535996.22,
+      "china_usd": 16280939.61,
+      "china_share": 59.1,
+      "unit_usd_per_kg": null
+    },
+    {
+      "period": "202511",
+      "label": "2025-11",
+      "world_usd": 25033097.52,
+      "china_usd": 17659464.41,
+      "china_share": 70.5,
+      "unit_usd_per_kg": null
+    },
+    {
+      "period": "202512",
+      "label": "2025-12",
+      "world_usd": 19850255.04,
+      "china_usd": 15033823.94,
+      "china_share": 75.7,
+      "unit_usd_per_kg": null
+    },
+    {
+      "period": "202601",
+      "label": "2026-01",
+      "world_usd": 17309656.65,
+      "china_usd": 14421831.75,
+      "china_share": 83.3,
+      "unit_usd_per_kg": null
+    },
+    {
+      "period": "202602",
+      "label": "2026-02",
+      "world_usd": 16385700.85,
+      "china_usd": 13453501.96,
+      "china_share": 82.1,
+      "unit_usd_per_kg": null
+    },
+    {
+      "period": "202603",
+      "label": "2026-03",
+      "world_usd": 20687547.18,
+      "china_usd": 17939661.05,
+      "china_share": 86.7,
+      "unit_usd_per_kg": null
+    },
+    {
+      "period": "202604",
+      "label": "2026-04",
+      "world_usd": 19663962.36,
+      "china_usd": 16828021.41,
+      "china_share": 85.6,
+      "unit_usd_per_kg": null
+    },
+    {
+      "period": "202605",
+      "label": "2026-05",
+      "world_usd": 14713082.21,
+      "china_usd": 12415650.54,
+      "china_share": 84.4,
+      "unit_usd_per_kg": null
+    },
+    {
+      "period": "202606",
+      "label": "2026-06",
+      "world_usd": 17617056.28,
+      "china_usd": 14715698.57,
+      "china_share": 83.5,
+      "unit_usd_per_kg": null
+    },
+    {
+      "period": "202607",
+      "label": "2026-07",
+      "world_usd": 10749438.22,
+      "china_usd": 8249065.28,
+      "china_share": 76.7,
+      "unit_usd_per_kg": null
+    },
+    {
+      "period": "202608",
+      "label": "2026-08",
+      "world_usd": 14141604.16,
+      "china_usd": 11854635.43,
+      "china_share": 83.8,
+      "unit_usd_per_kg": null
+    }
+  ],
+  "source": "UN Comtrade（联合国商品贸易统计数据库）· 德国进口 HS 851631"
+}

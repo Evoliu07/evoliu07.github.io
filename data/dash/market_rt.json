@@ -1,0 +1,96 @@
+{
+  "generated_at": "2026-10-26T16:34:57+08:00",
+  "as_of": "2026-10-26 16:34",
+  "items": [
+    {
+      "id": "sh",
+      "name": "上证指数",
+      "value": "3,697.52",
+      "unit": "点",
+      "chg_text": "+0.19%",
+      "chg_sign": 1,
+      "sub": "+7.04 · 2026-10-26 收盘",
+      "kind": "index"
+    },
+    {
+      "id": "hs300",
+      "name": "沪深300",
+      "value": "4,103.54",
+      "unit": "点",
+      "chg_text": "-0.04%",
+      "chg_sign": -1,
+      "sub": "-1.79 · 2026-10-26 收盘",
+      "kind": "index"
+    },
+    {
+      "id": "hsi",
+      "name": "恒生指数",
+      "value": "23,211.81",
+      "unit": "点",
+      "chg_text": "+0.51%",
+      "chg_sign": 1,
+      "sub": "+118.44 · 2026-10-26 收盘",
+      "kind": "index"
+    },
+    {
+      "id": "cgb10y",
+      "name": "10 年期国债收益率",
+      "value": "1.64",
+      "unit": "%",
+      "chg_text": "-0.1bp",
+      "chg_sign": -1,
+      "sub": "截至 2026-10-23",
+      "kind": "rate"
+    },
+    {
+      "id": "margin",
+      "name": "两融余额",
+      "value": "2.43",
+      "unit": "万亿元",
+      "chg_text": null,
+      "chg_sign": 0,
+      "sub": "截至 2026-10-23",
+      "kind": "amount"
+    },
+    {
+      "id": "usdcny",
+      "name": "美元兑人民币",
+      "value": "6.7162",
+      "unit": "",
+      "chg_text": "-0.0018",
+      "chg_sign": -1,
+      "sub": "中间价 2026-10-26",
+      "kind": "fx"
+    },
+    {
+      "id": "spread",
+      "name": "10Y − 2Y 期限利差",
+      "value": "0.39",
+      "unit": "个百分点",
+      "chg_text": null,
+      "chg_sign": 0,
+      "sub": "截至 2026-10-23",
+      "kind": "spread"
+    }
+  ],
+  "cgb": {
+    "date": "2026-10-23",
+    "y10": 1.64,
+    "y2": 1.2452,
+    "y10_chg_bp": -0.14,
+    "y10_prev_date": "2026-10-22",
+    "spread_10y2y": 0.3948
+  },
+  "margin": {
+    "date": "2026-10-23",
+    "total": 2431759315594.0,
+    "rzye": 2402663182353.0,
+    "rqye": 29096133241.0
+  },
+  "fx": {
+    "date": "2026-10-26",
+    "value": 6.7162,
+    "prev": 6.718,
+    "chg": -0.0018
+  }
+}
