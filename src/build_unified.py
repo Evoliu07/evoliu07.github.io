@@ -564,9 +564,12 @@ WX_JS = (Path(__file__).resolve().parent / "_wx_snippet.js").read_text(encoding=
 
 def main() -> None:
     html = build()
-    out = ROOT / "evo-site" / "dashboard.html"
-    out.write_text(html, encoding="utf-8")
-    log_line(f"统一数据看板：{out.relative_to(ROOT)}（{len(html)/1048576:.2f} MB）· "
+    # GitHub Pages 从仓库根目录发布；evo-site 保留一份兼容本地旧路径。
+    outs = (ROOT / "dashboard.html", ROOT / "evo-site" / "dashboard.html")
+    for out in outs:
+        out.parent.mkdir(parents=True, exist_ok=True)
+        out.write_text(html, encoding="utf-8")
+    log_line(f"统一数据看板：dashboard.html（{len(html)/1048576:.2f} MB）· "
              f"金融（利率研究 / 银行客户建模）+ 出海（比亚迪 / 徕芬）")
 
 

@@ -883,12 +883,12 @@ def main() -> None:
                 .replace("__WXJS__", WX_JS)
                 .replace("__AVATAR__", json.dumps(make_avatar(), ensure_ascii=False))
                 .replace("__DATA__", json.dumps(data, ensure_ascii=False)))
-    evo = ROOT / "evo-site"
-    if not evo.exists():
-        evo.mkdir(parents=True)
-    out = evo / "index.html"
-    out.write_text(html, encoding="utf-8")
-    log_line(f"主页已生成：{out.relative_to(ROOT)}（{len(html)/1048576:.2f} MB）")
+    # GitHub Pages 从仓库根目录发布；evo-site 保留一份兼容本地旧路径。
+    outs = (ROOT / "index.html", ROOT / "evo-site" / "index.html")
+    for out in outs:
+        out.parent.mkdir(parents=True, exist_ok=True)
+        out.write_text(html, encoding="utf-8")
+    log_line(f"主页已生成：index.html（{len(html)/1048576:.2f} MB）")
     log_line(f"  导航 5 项 · 实习 {len(data['career'])} 段 · 项目 {len(data['projects'])} 个"
              f" · 证书 {len(certs)} 项")
 

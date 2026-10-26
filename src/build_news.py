@@ -113,9 +113,12 @@ def build() -> str:
 
 def main() -> None:
     html = build()
-    out = ROOT / "evo-site" / "news.html"
-    out.write_text(html, encoding="utf-8")
-    log_line(f"财经快讯页：{out.relative_to(ROOT)}（{len(html)/1024:.0f} KB）· "
+    # GitHub Pages 从仓库根目录发布；evo-site 保留一份兼容本地旧路径。
+    outs = (ROOT / "news.html", ROOT / "evo-site" / "news.html")
+    for out in outs:
+        out.parent.mkdir(parents=True, exist_ok=True)
+        out.write_text(html, encoding="utf-8")
+    log_line(f"财经快讯页：news.html（{len(html)/1024:.0f} KB）· "
              f"财经 {len(fin := NEWS.get('finance') or [])} 条 / "
              f"出海 {len(NEWS.get('overseas') or [])} 条")
 

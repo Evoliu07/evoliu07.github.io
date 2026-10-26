@@ -8,30 +8,38 @@
   data/dash/
   build/images.json
   build/avatar.jpg
-  evo-site/index.html
-  evo-site/dashboard.html
-  evo-site/news.html
+  index.html
+  dashboard.html
+  news.html
 
-## 上传 GitHub（从零开始）
+> 注意：GitHub Pages 从仓库根目录读取 `index.html`。构建脚本会同时写入根目录和 `evo-site/`，
+> 线上站点以根目录为准。
 
-1. 在 GitHub 网页新建一个 **Public** 仓库，仓库名建议 `personal-site`，先不要勾选初始化 README。
-2. 在本目录打开终端，执行：
+## 上传 GitHub（更新原网站）
+
+原网站地址是 `https://evoliu07.github.io/`，对应仓库：`Evoliu07/evoliu07.github.io`。
+不要再新建 `personal-site`；如果已经新建了空的 `personal-site`，可以删除或忽略。
+
+在本目录终端执行：
 
 ```bash
-git init
-git add .
-git commit -m "feat: 个人网站初始版本"
-git branch -M main
-git remote add origin https://github.com/<你的用户名>/personal-site.git
+git remote add origin https://github.com/Evoliu07/evoliu07.github.io.git
+git fetch origin
+git merge origin/main --allow-unrelated-histories -X ours -m "chore: 同步自动更新版个人网站"
 git push -u origin main
 ```
 
-把 `<你的用户名>` 换成你的 GitHub 用户名。若 GitHub 弹出登录，用浏览器授权即可。
+如果提示登录，用浏览器授权 GitHub 即可。推送成功后等待 1–2 分钟，访问：
 
-3. 仓库页：Settings → Pages → Source 选 `Deploy from a branch`，Branch 选 `main` / `(root)`，保存。
-4. 仓库页：Actions → 若提示启用工作流，点 `I understand my workflows, go ahead and enable them`。
-5. 验证：Actions → `每日数据更新` → `Run workflow` 手动跑一次；成功后访问
-   `https://<你的用户名>.github.io/personal-site/`。
+```text
+https://evoliu07.github.io/
+```
+
+## 开启自动更新
+
+1. 仓库页：Settings → Pages → Source 选 `Deploy from a branch`，Branch 选 `main` / `(root)`。
+2. 仓库页：Actions → 若提示启用工作流，点 `I understand my workflows, go ahead and enable them`。
+3. 验证：Actions → `每日数据更新` → `Run workflow` 手动跑一次。
 
 ## 自动更新说明
 

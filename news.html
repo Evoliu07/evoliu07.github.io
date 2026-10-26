@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>财经快讯 · 刘柏廷 Evo</title>
+<style>
+:root{ --ink:#171411; --muted:#6d6258; --ink2:#3a332c; --paper:#f8f2e7; --line:#d8c8af;
+  --red:#b9422f; --blue:#245f73; --green:#0a6b4c; --white:#fffaf0;
+  --surface:rgba(255,250,240,.66); --bar-bg:rgba(248,242,231,.95);
+  --font-b:"Songti SC","Noto Serif SC",Georgia,serif;
+  --font-d:"PingFang SC","Microsoft YaHei",Helvetica,sans-serif;
+  --bg:radial-gradient(circle at 18% 6%, rgba(184,137,47,.09), transparent 55%), #f8f2e7;
+  --shadow:0 2px 10px rgba(60,45,25,.07); --tint:rgba(184,137,47,.12); }
+body.dark{ --ink:#e8e4dc; --muted:#9c948a; --ink2:#cfc9bf; --paper:#14120f; --line:#332e27;
+  --white:#0d0b09; --surface:rgba(34,30,25,.72); --bar-bg:rgba(20,18,15,.95);
+  --bg:radial-gradient(circle at 18% 6%, rgba(217,171,82,.09), transparent 55%), #14120f;
+  --red:#e07a63; --blue:#7fb6cc; --green:#4fbe86; --shadow:0 2px 14px rgba(0,0,0,.5);
+  --tint:rgba(217,171,82,.13); }
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font-b);background:var(--bg);color:var(--ink);line-height:1.8;font-size:16px}
+a{color:var(--blue);text-decoration:none} a:hover{text-decoration:underline}
+.bar{position:sticky;top:0;z-index:60;background:var(--bar-bg);backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;
+  gap:14px;padding:0 24px;height:58px;font-family:var(--font-d)}
+.bar b{font-size:15px;font-weight:600}
+.bar nav{display:flex;gap:18px;font-size:13.5px;align-items:center;flex-wrap:wrap}
+.bar nav a{color:var(--muted)} .bar nav a:hover{color:var(--ink)}
+.tg{border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:99px;
+  padding:5px 13px;font:inherit;font-size:12.5px;cursor:pointer;font-family:var(--font-d)}
+main{max-width:1120px;margin:0 auto;padding:30px 26px 70px}
+h1{font-family:var(--font-d);font-size:27px;font-weight:600}
+.stamp{color:var(--muted);font-size:13.5px;font-family:var(--font-d);margin:6px 0 26px}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(168px,1fr));gap:13px}
+.kpi{background:var(--surface);border:1px solid var(--line);border-radius:13px;padding:15px 17px;
+  box-shadow:var(--shadow)}
+.kpi .lb{font-size:12.5px;color:var(--muted);font-family:var(--font-d);letter-spacing:.02em}
+.kpi .vl{font-size:23px;font-weight:650;font-family:var(--font-d);margin-top:2px;
+  font-variant-numeric:tabular-nums;line-height:1.35}
+.kpi .vl .u{font-size:12.5px;font-weight:400;color:var(--muted);margin-left:3px}
+.kpi .ch{font-size:13px;font-family:var(--font-d);font-variant-numeric:tabular-nums;
+  min-height:20px;margin-top:3px}
+.kpi .sub{font-size:11.5px;color:var(--muted);font-family:var(--font-d);margin-top:3px}
+.up{color:var(--red)} .down{color:#1e8449}
+section{margin-top:40px}
+h2{font-family:var(--font-d);font-size:12.5px;letter-spacing:.17em;text-transform:uppercase;
+  color:var(--red);font-weight:700;margin-bottom:6px}
+.ptitle{font-family:var(--font-d);font-size:19px;font-weight:650;margin-bottom:14px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:start}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:17px 19px;
+  box-shadow:var(--shadow);min-width:0}
+.card h3{font-family:var(--font-d);font-size:15px;font-weight:650;margin-bottom:12px;
+  padding-bottom:9px;border-bottom:1px solid var(--line)}
+.chartbox{width:100%;overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:13.5px;font-family:var(--font-d);
+  font-variant-numeric:tabular-nums}
+th,td{padding:8px 9px;text-align:right;border-bottom:1px solid var(--line);white-space:nowrap}
+th:first-child,td:first-child{text-align:left}
+th{color:var(--muted);font-weight:600;font-size:12px}
+th .hd{font-weight:400;font-size:11px;opacity:.8}
+td.tn{font-weight:650}
+tr:last-child td{border-bottom:0}
+.tbwrap{overflow-x:auto}
+.units{font-size:12.5px;color:var(--muted);font-family:var(--font-d);margin-top:10px;
+  line-height:1.7}
+p.lead{font-size:15.5px;color:var(--ink2);margin-bottom:14px;line-height:1.9}
+/* 方法模块卡片 */
+.mgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:13px}
+.mcard{background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--green);
+  border-radius:11px;padding:15px 16px;box-shadow:var(--shadow)}
+.mcard .n{font-size:11.5px;color:var(--green);font-family:var(--font-d);font-weight:700;
+  letter-spacing:.1em}
+.mcard b{display:block;font-family:var(--font-d);font-size:15px;margin:4px 0 6px}
+.mcard span{font-size:13.5px;color:var(--ink2);line-height:1.75}
+footer{margin-top:44px;padding-top:22px;border-top:1px solid var(--line);text-align:center;
+  color:var(--muted);font-size:12.5px;font-family:var(--font-d);line-height:1.9}
+@media(max-width:900px){
+  .grid2{grid-template-columns:1fr;gap:0}
+  .grid2 > .card + .card{margin-top:16px}
+  .bar{height:auto;padding:10px 14px;flex-wrap:wrap}
+  .bar nav{gap:12px;font-size:12.5px}
+  main{padding:22px 15px 56px} h1{font-size:22px}
+  .kpis{grid-template-columns:repeat(auto-fit,minmax(148px,1fr));gap:10px}
+  .kpi .vl{font-size:20px}
+}
+
+main{max-width:1060px;margin:0 auto;padding:26px 20px 60px}
+h1{text-align:left;font-size:29px;letter-spacing:-.02em}
+.stamp{text-align:left;color:var(--muted);font-size:13px;font-family:var(--font-d);line-height:1.7;
+  margin:6px 0 26px}
+.nsec{margin-top:34px}
+.nsec + .nsec{margin-top:44px;border-top:1px solid var(--line);padding-top:30px}
+.nh{display:flex;align-items:baseline;gap:12px;justify-content:flex-start;margin-bottom:16px}
+.nh b{font-family:var(--font-d);font-size:22px;font-weight:750;letter-spacing:.02em;color:var(--red)}
+.nh span{font-size:12.5px;color:var(--muted);font-family:var(--font-d)}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:13px;
+  padding:15px 18px;box-shadow:var(--shadow)}
+.nlist{list-style:none;padding:0;margin:0}
+.nlist li{padding:11px 0;border-bottom:1px solid var(--line);display:grid;
+  grid-template-columns:92px 1fr;gap:12px;align-items:start}
+.nlist li:last-child{border-bottom:0}
+.nlist .t{font-family:var(--font-d);font-size:12.5px;color:var(--muted);
+  font-variant-numeric:tabular-nums;padding-top:2px}
+.nlist .x{font-size:15.2px;line-height:1.75;color:var(--ink2)}
+.nlist .x a{color:var(--ink2);text-decoration:none}
+.nlist .x a:hover{color:var(--blue);text-decoration:underline}
+.srcbox{margin-top:38px;padding-top:20px;border-top:1px solid var(--line);text-align:center;
+  font-size:12.5px;color:var(--muted);font-family:var(--font-d);line-height:1.9}
+@media(max-width:900px){
+  main{padding:20px 14px 52px}
+  h1{font-size:23px}
+  .nh b{font-size:19px;letter-spacing:.1em}
+  .nlist li{grid-template-columns:1fr;gap:4px}
+  .nlist .t{font-size:11.5px}
+  .nlist .x{font-size:14.5px}
+}
+</style></head><body>
+
+<div class="bar">
+  <b><a href="index.html" style="color:inherit">刘柏廷 · Evo</a>　<span style="color:var(--muted);font-weight:400">财经快讯</span></b>
+  <nav>
+    <a href="dashboard.html">数据看板</a>
+    <a href="index.html">回主页</a>
+    <button class="tg" onclick="document.body.classList.toggle('dark')">深/浅色</button>
+  </nav>
+</div>
+
+<main>
+  <h1>财经快讯</h1>
+  <p class="stamp">证券财经与出海大事　·　更新于 2026-10-26 16:35　·　本次抓取 1997 条，展示财经 15 条 / 出海 15 条</p>
+  
+  <div class="nsec">
+    <div class="nh"><b>证券财经大事</b><span>宏观 · 市场 · 监管</span></div>
+    <div class="card"><ul class="nlist"><li><span class="t">10-26 16:34</span><span class="x"><a href="https://finance.sina.cn/7x24/2026-10-26/detail-iniwpwiq2472580.d.html" target="_blank" rel="noopener">【派能科技：董事长提议1亿-2亿元回购公司股份】派能科技公告称，公司于2026年10月26日收到董事长韦在胜提议回购公司股份的函。提议公司使用自有资金和/或自筹资金，以集中竞价交易方式回购A股股份，回购资金总额不低于1.00亿元且不超过2.00亿元，回购价格不超过60.45元/股，回购期限为董事会审议通过回购方案之日起12个月内，回购股份将全部用于股权激励或员工持股计划，若3年内未使用完毕则予以注销。按回购金额上限测算，回购数量约330.85万股，占总股本1.35%；按下限测算约165.43万股，占总股本0.67%。本次回购事项尚需履行审批程序，存在不确定性。</a></span></li>
+<li><span class="t">10-26 16:34</span><span class="x"><a href="https://finance.sina.cn/7x24/2026-10-26/detail-iniwpwir9249450.d.html" target="_blank" rel="noopener">【三美股份：拟修订《公司章程》 变更法定代表人】三美股份公告称，公司第七届董事会第十二次会议审议通过修订《公司章程》的议案，该议案尚需提交股东会以出席股东所持表决权2/3以上通过。本次修订涉及法定代表人调整为总经理、新增控股股东同业竞争相关义务、完善股东权利征集规则、补充累积投票制适用情形、优化董事任职资格管理等条款。公司已聘任王富强为总经理，拟在章程修订生效后将法定代表人变更为王富强，同时提请股东会授权管理层办理相关工商登记备案事宜。</a></span></li>
+<li><span class="t">10-26 16:33</span><span class="x"><a href="https://finance.sina.cn/7x24/2026-10-26/detail-iniwpwir9248918.d.html" target="_blank" rel="noopener">【三美股份：2026年前三季度营收50.67亿元】三美股份公告称，2026年前三季度公司主要产品合计实现营业收入50.67亿元，合计产量23.84万吨，合计外销量15.27万吨。其中氟制冷剂营收43.75亿元，氟发泡剂营收2227.27万元，氟化氢营收6.70亿元。主要产品均价同比均上涨，氟制冷剂、氟发泡剂、氟化氢前三季度均价同比分别上涨20.99%、48.95%、31.24%。</a></span></li>
+<li><span class="t">10-26 16:33</span><span class="x"><a href="https://finance.sina.cn/7x24/2026-10-26/detail-iniwpwir9248820.d.html" target="_blank" rel="noopener">【博深股份：子公司拟申请3亿元银行贷款】博深股份公告称，公司第七届董事会第八次会议审议通过多项议案：同意子公司山东山铁新材料科技有限公司向农业银行济南银河支行申请短期流动资金贷款3.00亿元，用于主营业务经营、流动资金周转，贷款期限1年，授权其董事长/法定代表人签署贷款相关文件；审议通过2026年第三季度报告、2026年度投资计划调整议案；对子公司董事及法定代表人作出调整，李善达兼任常州市金牛研磨董事长及法定代表人，吴拥军任金牛研磨董事，程辉兼任美国先锋工具有限公司董事。</a></span></li>
+<li><span class="t">10-26 16:32</span><span class="x"><a href="https://finance.sina.cn/7x24/2026-10-26/detail-iniwpwir9248407.d.html" target="_blank" rel="noopener">【首批主动ETF再迎提前结募，或将于11月下旬集中上市】从业内了解到，华泰柏瑞基金、平安基金、华夏基金旗下主动ETF均已达到20亿元募集规模上限，将提前结束募集。这也是继摩根资产管理（中国）、易方达基金、富国基金旗下主动ETF率先“一日售罄”之后，再度宣布提前结募的主动ETF产品。此外从业内获悉，首批主动ETF或将在11月下旬集中上市。（中证金牛座）</a></span></li>
+<li><span class="t">10-26 16:32</span><span class="x"><a href="https://finance.sina.cn/7x24/2026-10-26/detail-iniwpwir9247889.d.html" target="_blank" rel="noopener">【上海亚虹：控制权拟变更事项获上交所合规性确认】上海亚虹公告称，公司控股股东宁生集团、持股5%以上股东谢亚明及其一致行动人谢悦，拟合计向飞科投资转让公司29.99%股份，转让总价9.00亿元，转让完成后公司控股股东及实控人将变更。飞科投资还拟发起部分要约收购10.21%股份。近日本次协议转让事项已通过上海证券交易所合规性确认，尚需办理股份过户登记手续，相关事项能否最终完成存在不确定性。</a></span></li>
+<li><span class="t">10-26 16:31</span><span class="x"><a href="https://finance.sina.cn/7x24/2026-10-26/detail-iniwpwir9247177.d.html" target="_blank" rel="noopener">【石四药集团：2026年前九个月营业额同比增长13.5%】石四药集团公告，截至2026年9月30日止九个月，公司未经审核营业额约35.2亿港元，同比增长13.5%；未经审核毛利约14.42亿港元，同比增长11.4%，毛利率约为41.0%，同比减少0.7百分点；本公司股东应占溢利约4.6亿港元，同比增加15.5%。</a></span></li>
+<li><span class="t">10-26 16:31</span><span class="x"><a href="https://finance.sina.cn/7x24/2026-10-26/detail-iniwpwir9246705.d.html" target="_blank" rel="noopener">【拱东医疗：金驰投资减持致一致行动人持股比例降0.4%】拱东医疗公告称，公司持股5%以上股东台州金驰投资管理合伙企业（有限合伙）于2026年10月8日至10月26日通过集中竞价方式减持公司股份89.15万股。本次权益变动后，金驰投资与其一致行动人施慧勇、施依贝合计持股数量由13495.08万股减少至13405.93万股，合计持股比例由61.39%降至60.99%，触及1%刻度。本次权益变动为履行此前披露的减持计划，不触及要约收购，不会导致公司控股股东及实控人变化，目前减持计划尚未实施完毕。</a></span></li>
+<li><span class="t">10-26 16:30</span><span class="x"><a href="https://finance.sina.cn/7x24/2026-10-26/detail-iniwpwiq2469216.d.html" target="_blank" rel="noopener">德国就50亿欧元、票面利率3%、期限2.0年的政府债券招标。</a></span></li>
+<li><span class="t">10-26 16:29</span><span class="x"><a href="https://finance.sina.cn/7x24/2026-10-26/detail-iniwpwiq2468380.d.html" target="_blank" rel="noopener">【杰富瑞：上调苹果目标价至270.62美元，仍维持“跑输大市”评级】杰富瑞发表报告指，预期苹果今年9月底止2026财年第四季收入及每股盈利分别较市场预期高4%及5%，因9月9日宣布加价前iPhone出现强劲提前购买需求；惟12月底止首财季指引料或逊预期，因iPhone 18 Pro/Pro Max需求弱于预期、存储器价格上升加重毛利率压力，以及可折叠iPhone DUO需求仅属符合预期、上行惊喜有限。该行维持对其“跑输大市”评级，并将其目标价由263.66美元上调至270.62美元。</a></span></li>
+<li><span class="t">10-26 16:29</span><span class="x"><a href="https://finance.sina.cn/7x24/2026-10-26/detail-iniwpwir9245385.d.html" target="_blank" rel="noopener">【内塔尼亚胡警告制裁风险 以色列股市开盘下跌】据以色列媒体报道，特拉维夫证券交易所今早开盘下跌。这是以色列总理发表有关以色列需要为国际制裁及与全球经济脱钩做好准备的言论后，股市首次出现下跌。以色列总理内塔尼亚胡上周五在接受采访时表示，他已下令制定一项计划，使以色列能够借助加密资产等替代支付手段，应对金融体系可能面临的限制。</a></span></li>
+<li><span class="t">10-26 16:27</span><span class="x"><a href="https://finance.sina.cn/7x24/2026-10-26/detail-iniwpwir9244143.d.html" target="_blank" rel="noopener">【美股“新云”股盘前普跌】Neocloud公司股价盘前下跌；埃隆·马斯克表示，这些公司将面临大规模整合和倒闭。Nebius下跌4.5%，CoreWeave下跌4.4%，Iren下跌4.1%。</a></span></li>
+<li><span class="t">10-26 16:26</span><span class="x"><a href="https://finance.sina.cn/7x24/2026-10-26/detail-iniwpwiq2466696.d.html" target="_blank" rel="noopener">【万祥科技：2026年第三季度净利润3761.41万元，同比增长391.62%】万祥科技公告，2026年第三季度营业收入4.25亿元，同比增长2.51%；归属于上市公司股东的净利润3761.41万元，同比增长391.62%；扣非净利润3644.86万元，同比增长404.44%。2026年前三季度营业收入11.08亿元，同比增长5.68%；归属于上市公司股东的净利润1503.06万元，同比增长55.65%；扣非净利润1136.78万元，同比增长82.05%。</a></span></li>
+<li><span class="t">10-26 16:26</span><span class="x"><a href="https://finance.sina.cn/7x24/2026-10-26/detail-iniwpwir9243756.d.html" target="_blank" rel="noopener">【瑞迪智驱：2026年第三季度净利润3460.74万元，同比增长22.35%】瑞迪智驱公告，2026年第三季度营业收入2.18亿元，同比增长33.50%；归属于上市公司股东的净利润3460.74万元，同比增长22.35%；扣非净利润3270.05万元，同比增长21.33%。2026年前三季度营业收入5.92亿元，同比增长23.10%；归属于上市公司股东的净利润8136.05万元，同比增长2.60%；扣非净利润7647.04万元，同比增长1.71%。</a></span></li>
+<li><span class="t">10-26 16:24</span><span class="x"><a href="https://finance.sina.cn/7x24/2026-10-26/detail-iniwpwir9241135.d.html" target="_blank" rel="noopener">【和邦生物：2026年第三季度净利润7372.54万元，同比增长78.35%】和邦生物公告，2026年第三季度营业收入16.34亿元，同比下降18.52%；归属于上市公司股东的净利润7372.54万元，同比增长78.35%；扣非净利润7214.49万元，同比增长68.91%。2026年前三季度营业收入45.22亿元，同比下降23.70%；归属于上市公司股东的净利润4.54亿元，同比增长387.48%；扣非净利润4.47亿元，同比增长398.60%。</a></span></li></ul></div>
+  </div>
+
+  
+  <div class="nsec">
+    <div class="nh"><b>出海大事</b><span>外贸 · 跨境 · 反倾销 · 出海</span></div>
+    <div class="card"><ul class="nlist"><li><span class="t">10-26 16:34</span><span class="x"><a href="https://finance.sina.cn/7x24/2026-10-26/detail-iniwpwiq2472160.d.html" target="_blank" rel="noopener">【商务部：发放对硝基甲苯反倾销案调查问卷】商务部公告，2026年10月3日，中华人民共和国商务部发布2026年第44号公告，决定对原产于欧盟的进口对硝基甲苯进行反倾销调查。该产品归在《中华人民共和国进出口税则》：29042020，该税则号项下其他产品不在本次调查范围之内。根据《中华人民共和国反倾销条例》有关规定，现就该反倾销案调查问卷发放的相关工作通知。其中提到，外国出口商或生产商应当按要求填写国外出口商或生产商调查问卷。国内生产者应当按照要求填写国内生产者调查问卷。国内进口商应当按照要求填写国内进口商调查问卷。</a></span></li>
+<li><span class="t">10-26 16:28</span><span class="x"><a href="https://finance.sina.cn/7x24/2026-10-26/detail-iniwpwir9245133.d.html" target="_blank" rel="noopener">【三未信安：2026年第三季度净利润1807.4万元，营业收入同比增长37.62%】三未信安公告，2026年第三季度营业收入1.37亿元，同比增长37.62%；归母净利润1807.4万元，扣非净利润1473.87万元。2026年前三季度营业收入3.47亿元，同比增长17.61%；归母净利润551.25万元，扣非净利润亏损383.69万元。公司称，营业收入增长主要系重点行业客户需求强劲、海外市场和密码芯片业务规模增加，以及新开拓领域相关项目逐步落地。</a></span></li>
+<li><span class="t">10-26 16:20</span><span class="x"><a href="https://finance.sina.cn/7x24/2026-10-26/detail-iniwpwir9236350.d.html" target="_blank" rel="noopener">【大和：特斯拉各业务势头似在增强，维持“中性”评级】大和发表报告指，特斯拉2026年第三季非公认会计原则(non-GAAP)每股盈利0.48美元，高于该行及市场预期约0.45美元，主要受汽车及非汽车业务利润率表现较佳带动，当中部分受关税退款支持。各业务势头似在增强，包括汽车积压订单达四年来最高、北美新车FSD(有监督)附带率达75%、奥斯汀Cybercab无监督里程提升8倍，以及储能业务订单及积压订单均创历史新高。该行维持“中性”评级，反映预期现金消耗显著及robotaxi商业化较慢，但对多项业务稳健执行感到鼓舞，认为自动驾驶技术改善正推动FSD采用，或有助公司在电动车需求回升环境中扩大市占，并限制产量风险。</a></span></li>
+<li><span class="t">10-26 16:12</span><span class="x"><a href="https://finance.sina.cn/7x24/2026-10-26/detail-iniwpwir9229391.d.html" target="_blank" rel="noopener">【鲜果、机床、医疗器械 进博会首批展品进馆】第九届中国国际进口博览会将于11月5日至10日在上海举办。今天（26日）上午，第九届进博会首批展品进馆仪式在国家会展中心（上海）举行。来自奥地利、美国、德国等国的12件展品开始入馆，不少都是全球首发、亚洲首秀，标志着本届进博会展馆搭建和布展工作进入最后冲刺阶段。记者了解到，首批进馆的展品中，包含多款瞄准国内消费升级需求的全球首发鲜果，比如来自秘鲁的有机香蕉、来自荷兰的苹果、来自马来西亚的白玉珍珠榴梿等。一家主营果蔬进出口的企业市场总监曾小清说，跨境航线、冷链配套持续优化，正在不断缩短全球好物和中国消费者之间的距离。医疗方面，同为亚洲首秀的一款原生AI能谱血管造影系统也同日进场。它将原生AI技术赋能、贯穿于数字减影血管造影成像的各个关键环节，为心脑血管及肿瘤等复杂疾病的微创治疗提供更智能的低剂量成像支持，有助于提升介入手术影像质量和手术操作效率。而在高端装备制造方面，今年第一次参加进博会的一家来自奥地利的企业，选择把自家最先进的车铣复合加工中心带到本届进博会上进行亚洲首秀。企业首席代表刘艳霞介绍，这款高端机床将车、铣、钻、磨等多种工序集于一身，在复合加工、精度控制和无人化运行方面优势突出。（央视新闻）</a></span></li>
+<li><span class="t">10-26 16:03</span><span class="x"><a href="https://finance.sina.cn/7x24/2026-10-26/detail-iniwpwir9221563.d.html" target="_blank" rel="noopener">【商务部就《保护中国商业秘密特别规定（征求意见稿）》公开征求意见】商务部消息，为了维护国家主权、安全、发展利益，保护中国权利人的合法权益，根据《中华人民共和国对外贸易法》等有关法律法规，商务部研究起草了《保护中国商业秘密特别规定（征求意见稿）》，现向社会公开征求意见。</a></span></li>
+<li><span class="t">10-26 16:00</span><span class="x"><a href="https://finance.sina.cn/7x24/2026-10-26/detail-iniwpwir9219095.d.html" target="_blank" rel="noopener">【美股盘前：“七姐妹”普涨】英伟达涨0.17%，苹果跌0.52%，微软涨0.23%，谷歌涨0.21%，亚马逊涨0.24%，Meta跌0.41%，特斯拉涨0.88%。</a></span></li>
+<li><span class="t">10-26 15:43</span><span class="x"><a href="https://finance.sina.cn/7x24/2026-10-26/detail-iniwpwiq2427392.d.html" target="_blank" rel="noopener">【高盛建议增持大宗商品，称地缘冲突、供应链集中及长期供需失衡构成三重支撑】高盛建议投资者在短期和长期资产配置中均增持大宗商品，认为主要有三方面理由：一是地缘政治冲突加剧，伊朗战争升级、航运遇袭及能源设施受损可能推动能源价格大幅上涨，而股票和债券对能源价格变化更加敏感，使大宗商品具备对冲其他资产下跌风险的作用；二是全球关键原材料和能源供应链日益集中，供应中断风险具有长期性。此外，伊朗及俄乌战争、可能出现的超强厄尔尼诺现象以及粮食出口限制，也可能扰乱农产品生产和国际贸易，推高粮食价格；三是长期供需失衡，电气化、AI及数据中心建设持续推高铜和电力需求，央行储备多元化支撑黄金需求，而相关供应增长受到限制。不过，高盛预计原油和欧洲天然气价格可能随着中东供应调整而回落，因此更倾向于选择具有较大潜在上涨空间的特定能源对冲工具。</a></span></li>
+<li><span class="t">10-26 15:39</span><span class="x"><a href="https://finance.sina.cn/7x24/2026-10-26/detail-iniwpwir9199926.d.html" target="_blank" rel="noopener">【海关总署公告2026年第150号（关于修订发布《进口食品进出口商备案管理规定》的公告）】为进一步落实党的二十届四中全会关于“强化食品药品安全全链条监管”的有关要求，强化进口食品溯源管理，优化公共服务和营商环境，海关总署对《进口食品进出口商备案管理规定》（原国家质量监督检验检疫总局公告2012年第55号附件1）进行了修订，现予以发布。</a></span></li>
+<li><span class="t">10-26 15:35</span><span class="x"><a href="https://finance.sina.cn/7x24/2026-10-26/detail-iniwpwir9194099.d.html" target="_blank" rel="noopener">AMSEPC：马来西亚10月1日至25日棕榈油出口量为132.8万吨，环比增长67.72%。</a></span></li>
+<li><span class="t">10-26 15:26</span><span class="x"><a href="https://finance.sina.cn/7x24/2026-10-26/detail-iniwpwiq2406775.d.html" target="_blank" rel="noopener">【美国国际贸易委员会作出集装箱拖车底盘及其部件第一次双反日落复审产业损害终裁】2026年10月21日，美国国际贸易委员会（ITC）投票对进口自中国的集装箱拖车底盘及其部件（Chassis and Subassemblies）作出第一次反倾销和反补贴日落复审产业损害肯定性终裁：裁定若取消现行反倾销和反补贴措施，在合理可预见期间内，涉案产品的进口对美国国内产业造成的实质性损害可能继续或再度发生。根据终裁结果，本案现行反倾销和反补贴措施继续有效。</a></span></li>
+<li><span class="t">10-26 15:25</span><span class="x"><a href="https://finance.sina.cn/7x24/2026-10-26/detail-iniwpwiq2406433.d.html" target="_blank" rel="noopener">【美国作出金刚石锯片第三次反倾销日落复审产业损害终裁】2026年10月21日，美国国际贸易委员会（ITC）投票对进口自中国的金刚石锯片（Diamond Sawblades and Parts）作出第三次反倾销日落复审产业损害肯定性终裁，裁定若取消现行反倾销措施，在合理可预见期间内，涉案产品的进口对美国国内产业造成的实质性损害可能继续或再度发生。基于上述肯定性产业损害终裁，本案现行反倾销措施继续有效。</a></span></li>
+<li><span class="t">10-26 15:24</span><span class="x">据上海航运交易所数据，截至2026年10月26日，上海出口集装箱结算运价指数（欧洲航线）报2197.95点，与上期相比涨2.0%；上海出口集装箱结算运价指数（美西航线）报4752.32点，与上期相比跌1.1%。</span></li>
+<li><span class="t">10-26 15:21</span><span class="x"><a href="https://finance.sina.cn/7x24/2026-10-26/detail-iniwprzs2532905.d.html" target="_blank" rel="noopener">【摩根大通看好微软业务增速 维持买入评级】摩根大通分析师Samik Chatterjee周四维持微软“增持”评级，目标价625美元。 他在研报中提到，投资者将密切跟踪Azure、商用版Microsoft 365云以及Copilot的业务增速。 “不过，相比本季度财报本身，股价反应可能更多由业绩展望决定。”Chatterjee称，投资者希望看到云业务与AI增长具备可持续性的信号。 Yorkville Ives分析师Dan Ives周五维持微软“跑赢大盘”评级，目标价615美元。Ives将微软列为他“2027年前五大科技标的”之一。 Ives表示，微软、Alphabet、亚马逊这些超大规模云厂商集中披露财报，有望“安抚波动剧烈的市场”。</a></span></li>
+<li><span class="t">10-26 15:16</span><span class="x"><a href="https://finance.sina.cn/7x24/2026-10-26/detail-iniwprzt9304309.d.html" target="_blank" rel="noopener">【中国制造网与Zoho达成战略合作】焦点科技旗下中国制造网与Zoho签署战略合作协议。双方将对接MIC国际站全球贸易资源与Zoho数字化产品体系，覆盖外贸企业海外获客、客户经营与业务协同。</a></span></li>
+<li><span class="t">10-26 15:13</span><span class="x"><a href="https://finance.sina.cn/7x24/2026-10-26/detail-iniwprzt9300049.d.html" target="_blank" rel="noopener">【中国政府非洲事务特别代表刘显法出席庆祝赞比亚独立日招待会】2026年10月23日，中国政府非洲事务特别代表刘显法出席赞比亚驻华使馆举办的庆祝赞比亚独立日招待会。刘显法祝贺赞比亚独立日并表示，在习近平主席和希奇莱马总统战略引领下，中赞全面战略合作伙伴关系已经发展成为中非友好和南南合作的典范。在“零关税”等政策有力带动下，两国经贸合作捷报频传，今年前三季度双边贸易额再创新高。今年是坦赞铁路建成通车50周年，坦赞铁路激活和繁荣带建设稳步推进，将成为新时代中非携手推进现代化新的旗舰工程。中方愿同包括赞比亚在内的非洲朋友一道，推动落实习近平主席提出的四大全球倡议，以有力行动为构建新时代全天候中非命运共同体作出贡献。（外交部）</a></span></li></ul></div>
+  </div>
+
+
+  <div class="srcbox">
+    数据来源：新浪财经 7×24 全球实时财经快讯（公开接口）<br>
+    覆盖范围：2026-10-24 17:18:12 ~ 2026-10-26 16:34:34　·　按关键词自动分流，每日更新
+  </div>
+</main>
+<script>
+(function () {
+  var ua = navigator.userAgent || '';
+  var fb = document.getElementById('static-fallback');
+  if (fb) { fb.style.display = 'none'; }
+  if (/MicroMessenger/i.test(ua) && !document.getElementById('wxbar')) {
+    document.body.classList.add('wx');
+    var bar = document.createElement('div');
+    bar.id = 'wxbar';
+    bar.innerHTML = '如页面显示不完整，请点右上角 <b>···</b> → 选择 <b>「在浏览器打开」</b>';
+    document.body.appendChild(bar);
+  }
+})();
+</script>
+
+</body></html>
