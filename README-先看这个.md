@@ -11,6 +11,7 @@
   index.html
   dashboard.html
   news.html
+  contact.html
 
 > 注意：GitHub Pages 从仓库根目录读取 `index.html`。构建脚本会同时写入根目录和 `evo-site/`，
 > 线上站点以根目录为准。

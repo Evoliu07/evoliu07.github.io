@@ -412,37 +412,16 @@ main{max-width:960px}
 .chain span::before{counter-increment:step;content:counter(step,decimal-leading-zero);
   font-size:10px;color:var(--red);letter-spacing:.05em}
 .track p{font-family:var(--font-d);font-size:13px;line-height:1.9;color:var(--ink2)}
-.service-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:18px}
-.service{padding:15px 0 0 20px;border-left:1px solid var(--line);background:transparent}
+.service-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:0;row-gap:16px;margin-top:18px}
+.service{padding:15px 30px 0 20px;border-left:1px solid var(--line);background:transparent}
+.service:nth-child(even){padding-right:0}
 .service b{display:block;font-family:var(--font-d);font-size:12.5px;margin-bottom:5px;color:var(--ink)}
 .service p{font-family:var(--font-d);font-size:11.5px;line-height:1.8;color:var(--muted)}
-.contact-panel{display:grid;grid-template-columns:minmax(0,.82fr) minmax(0,1.18fr);gap:34px;
-  margin-top:36px;padding:28px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);
-  scroll-margin-top:90px}
-.contact-copy h2{font-family:var(--font-b);font-size:26px;line-height:1.45;margin:8px 0 10px}
-.contact-copy p{font-family:var(--font-d);font-size:12.5px;line-height:1.9;color:var(--muted)}
-.contact-links{display:flex;flex-direction:column;gap:5px;margin-top:14px;font-family:var(--font-d);
-  font-size:12px;color:var(--ink2)}
-.contact-links a{color:var(--red);text-decoration:none}
-.contact-links a:hover{text-decoration:underline}
-.contact-form{display:grid;gap:10px;position:relative}
-.form-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.contact-form input,.contact-form textarea{width:100%;border:1px solid var(--line);border-radius:8px;
-  background:var(--surface-strong);color:var(--ink);font-family:var(--font-d);font-size:13px;
-  line-height:1.6;padding:10px 12px;outline:none}
-.contact-form textarea{min-height:112px;resize:vertical}
-.contact-form input:focus,.contact-form textarea:focus{border-color:var(--red);
-  box-shadow:0 0 0 3px rgba(185,66,47,.08)}
-.contact-form input::placeholder,.contact-form textarea::placeholder{color:var(--muted);opacity:.72}
-.contact-form button{border:0;border-radius:8px;background:var(--red);color:#fffaf0;
-  font-family:var(--font-d);font-size:13px;font-weight:650;padding:10px 18px;cursor:pointer;
-  justify-self:start}
-.contact-form button:hover{background:var(--ink)}
-.contact-form button:disabled{opacity:.55;cursor:wait}
-.hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
-.form-note{min-height:20px;font-family:var(--font-d);font-size:11.5px;line-height:1.65;color:var(--muted)}
-.form-note.ok{color:var(--green)}
-.form-note.err{color:var(--red)}
+.site-foot{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:38px;
+  padding-top:16px;border-top:1px solid var(--line);font-family:var(--font-d);font-size:11.5px;
+  color:var(--muted)}
+.site-foot a{color:var(--muted);text-decoration:none}
+.site-foot a:hover{color:var(--red)}
 .jump{grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:30px}
 .jump button{border-radius:10px;padding:15px 16px;text-align:left;background:var(--surface)}
 .jump button b{font-size:13px}
@@ -469,11 +448,13 @@ main{max-width:960px}
   .track{padding:0}
   .track + .track{border-left:0;border-top:1px solid var(--line);padding-left:0;padding-top:22px;margin-top:22px}
   .section-head{margin-top:30px}
-  .contact-panel{grid-template-columns:1fr;gap:18px;margin-top:28px;padding:23px 0}
-  .contact-copy h2{font-size:23px}
+  .service-grid{grid-template-columns:1fr}
+  .service{padding:16px 0 0 0;border-left:0;border-top:1px solid var(--line);margin-top:16px}
+  .service:first-child{border-top:0;margin-top:0;padding-top:0}
+  .service:nth-child(even){padding-right:0}
+  .site-foot{margin-top:30px}
 }
 @media(max-width:480px){
-  .form-row{grid-template-columns:1fr}
   .hero h1{font-size:31px}
   .hero .target{font-size:12px;letter-spacing:.05em}
   .hero .biohead{font-size:17px}
@@ -523,12 +504,16 @@ HTML = """<!DOCTYPE html>
   <section class="view" id="v-proj"></section>
   <section class="view" id="v-cert"></section>
   <noscript><div id="static-fallback">__STATIC__</div></noscript>
+  <footer class="site-foot">
+    <span>© 2026 刘柏廷 · Evo</span>
+    <a href="contact.html">联系我 · 留言 →</a>
+  </footer>
 </main>
 <div class="lb" id="lb"><img id="lb-img" alt="证书"></div>
 
 __WXJS__
 <script>
-const AV=__AVATAR__, D=__DATA__, CLOUD_CFG=__CLOUD_CONFIG__;
+const AV=__AVATAR__, D=__DATA__;
 const THEMES=[["warm-paper","暖纸"],["ink-night","夜墨"],["mist-blue","雾蓝"],
   ["forest-moss","苔绿"],["clay-rust","陶土"],["cloud-grey","云灰"],["gold-leaf","金叶"]];
 const TK="evo:theme", VK="evo:view";
@@ -555,8 +540,7 @@ document.getElementById("v-home").innerHTML=`
       <p class="biohead">把投研观点讲成客户愿意行动的方案，<br>把客户反馈沉淀成可跟进的经营动作。</p>
       <p class="sub">${D.subtitle}</p>
       <div class="hero-actions">
-        <button class="primary" onclick="document.getElementById('contact-panel').scrollIntoView({behavior:'smooth'})">给我留言</button>
-        <a class="secondary" href="mailto:${D.email}">发送邮件</a>
+        <a class="primary" href="mailto:${D.email}">发送邮件</a>
       </div>
       <p class="updated">页面更新：${D.meta.page_updated} · 数据期与抓取时间以看板标注为准</p>
     </div>
@@ -575,98 +559,12 @@ document.getElementById("v-home").innerHTML=`
     <div class="chain">${t.chain.map(c=>`<span>${c}</span>`).join("")}</div>
     <p>${t.text}</p></article>`).join("")}</div>
   <div class="service-grid">${D.service.map(s=>`<div class="service"><b>${s.title}</b><p>${s.text}</p></div>`).join("")}</div>
-  <section class="contact-panel" id="contact-panel">
-    <div class="contact-copy">
-      <div class="eyebrow">联系我</div>
-      <h2>有岗位机会，或想聊项目？</h2>
-      <p>留下你的联系方式，我会直接回复。留言只用于沟通，不会公开展示。</p>
-      <div class="contact-links">
-        <span>邮箱：<a href="mailto:${D.email}">${D.email}</a></span>
-        <span>优先方向：机构销售 / 渠道销售</span>
-      </div>
-    </div>
-    <form class="contact-form" id="contact-form" novalidate>
-      <div class="form-row">
-        <input name="name" maxlength="80" autocomplete="name" placeholder="你的称呼 *" required>
-        <input name="contact" maxlength="160" autocomplete="email" placeholder="邮箱 / 微信（选填）">
-      </div>
-      <textarea name="message" maxlength="2000" placeholder="想聊的岗位、项目或问题 *" required></textarea>
-      <div class="hp" aria-hidden="true"><label>Website<input name="website" tabindex="-1" autocomplete="off"></label></div>
-      <button type="submit">发送留言</button>
-      <p class="form-note" id="contact-status" aria-live="polite">你的留言会加密传输到云端，仅我可见。</p>
-    </form>
-  </section>
   <div class="jump">
     <button onclick="go('exp')"><b>经历 →</b><span>教育背景与六段实习</span></button>
     <button onclick="go('proj')"><b>项目 →</b><span>客户经营 · 利率 · 出海</span></button>
     <button onclick="location.href='news.html'"><b>财经快讯 →</b><span>每日更新 · 来源可追溯</span></button>
     <button onclick="location.href='dashboard.html'"><b>数据看板 →</b><span>金融优先 · 出海补充</span></button>
   </div>`;
-
-let cloudClient=null, cloudLoader=null;
-function loadCloudSdk(){
-  if(window.WorkBuddyCloud)return Promise.resolve();
-  if(cloudLoader)return cloudLoader;
-  cloudLoader=new Promise((resolve,reject)=>{
-    const s=document.createElement("script");
-    s.src="https://cdn.jsdelivr.net/npm/@tencent-ai/workbuddy-cloud-sdk@dev/lib/index.global.js";
-    s.onload=resolve;
-    s.onerror=()=>{cloudLoader=null;reject(new Error("CLOUD_SDK_UNAVAILABLE"));};
-    document.head.appendChild(s);
-  });
-  return cloudLoader;
-}
-async function getCloudClient(){
-  if(cloudClient) return cloudClient;
-  await loadCloudSdk();
-  const factory=window.WorkBuddyCloud&&window.WorkBuddyCloud.createWorkBuddyCloud;
-  if(!factory) throw new Error("CLOUD_SDK_UNAVAILABLE");
-  cloudClient=factory({endpoint:CLOUD_CFG.endpoint, publishableKey:CLOUD_CFG.publishableKey});
-  return cloudClient;
-}
-const contactForm=document.getElementById("contact-form");
-const contactStatus=document.getElementById("contact-status");
-const CLOUD_ORIGIN_HOST="boting-portfolio.app.workbuddy.host";
-if(location.hostname!==CLOUD_ORIGIN_HOST){
-  contactStatus.textContent="GitHub 版会打开你的邮件客户端发送，内容不会存入网页数据库。";
-}
-function setContactStatus(text, kind){
-  contactStatus.textContent=text;
-  contactStatus.className="form-note"+(kind?" "+kind:"");
-}
-contactForm.addEventListener("submit", async (event)=>{
-  event.preventDefault();
-  const fd=new FormData(contactForm);
-  if(String(fd.get("website")||"").trim()){ contactForm.reset(); return; }
-  const name=String(fd.get("name")||"").trim();
-  const contact=String(fd.get("contact")||"").trim();
-  const message=String(fd.get("message")||"").trim();
-  if(!name || message.length<5){ setContactStatus("请填写称呼和至少 5 个字的留言。","err"); return; }
-  if(location.hostname!==CLOUD_ORIGIN_HOST){
-    const subject=encodeURIComponent("来自个人网站的留言 · "+name);
-    const nl=String.fromCharCode(10,10);
-    const body=encodeURIComponent(message+nl+"联系方式："+(contact||"未填写"));
-    window.location.href="mailto:"+D.email+"?subject="+subject+"&body="+body;
-    setContactStatus("已打开邮件客户端，直接发送即可。","ok");
-    return;
-  }
-  const btn=contactForm.querySelector('button[type="submit"]');
-  btn.disabled=true; btn.textContent="发送中…"; setContactStatus("正在发送…","");
-  try{
-    const cloud=await getCloudClient();
-    const {error}=await cloud.database.from("contact_messages").insert({
-      name:name, contact:contact||null, message:message, source_page:"home"
-    });
-    if(error) throw error;
-    contactForm.reset();
-    setContactStatus("已收到，我会尽快回复你。","ok");
-  }catch(err){
-    console.error("contact submit failed",err);
-    setContactStatus("发送失败，请直接发邮件到 "+D.email+"。","err");
-  }finally{
-    btn.disabled=false; btn.textContent="发送留言";
-  }
-});
 
 document.getElementById("v-exp").innerHTML=`
   <h2 class="sec">教育经历</h2>
@@ -751,6 +649,12 @@ def make_avatar() -> str:
     b = io.BytesIO()
     im.save(b, "JPEG", quality=90, optimize=True)
     return "data:image/jpeg;base64," + base64.b64encode(b.getvalue()).decode()
+
+
+def build_contact_page(email: str) -> str:
+    tpl = (Path(__file__).resolve().parent / "contact_template.html").read_text(encoding="utf-8")
+    return (tpl.replace("__EMAIL__", email)
+               .replace("__CLOUD_CONFIG__", json.dumps(CLOUD_CONFIG, ensure_ascii=False)))
 
 
 def strip_tags(s: str) -> str:
@@ -1027,14 +931,18 @@ def main() -> None:
                 .replace("__STATIC__", static_fallback(data))
                 .replace("__WXJS__", WX_JS)
                 .replace("__AVATAR__", json.dumps(make_avatar(), ensure_ascii=False))
-                .replace("__CLOUD_CONFIG__", json.dumps(CLOUD_CONFIG, ensure_ascii=False))
                 .replace("__DATA__", json.dumps(data, ensure_ascii=False)))
     # GitHub Pages 从仓库根目录发布；evo-site 保留一份兼容本地旧路径。
     outs = (ROOT / "index.html", ROOT / "evo-site" / "index.html")
     for out in outs:
         out.parent.mkdir(parents=True, exist_ok=True)
         out.write_text(html, encoding="utf-8")
+    contact_html = build_contact_page(data["email"])
+    for out in (ROOT / "contact.html", ROOT / "evo-site" / "contact.html"):
+        out.parent.mkdir(parents=True, exist_ok=True)
+        out.write_text(contact_html, encoding="utf-8")
     log_line(f"主页已生成：index.html（{len(html)/1048576:.2f} MB）")
+    log_line(f"联系我：contact.html（{len(contact_html)/1024:.0f} KB）")
     log_line(f"  导航 5 项 · 实习 {len(data['career'])} 段 · 项目 {len(data['projects'])} 个"
              f" · 证书 {len(certs)} 项")
 
