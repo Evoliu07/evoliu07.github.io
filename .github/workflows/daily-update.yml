@@ -2,17 +2,13 @@ name: 每日数据更新
 
 on:
   schedule:
-    # 每天北京时间 18:30（UTC 10:30）自动跑一次，尽量拿到当日收盘后数据
-    - cron: '30 10 * * *'
+    # 每天北京时间 12:00（UTC 04:00）自动跑一次
+    - cron: '0 4 * * *'
   # 也允许在 GitHub 网页上手动点一下「Run workflow」立刻更新
   workflow_dispatch:
 
 permissions:
   contents: write
-
-concurrency:
-  group: daily-update
-  cancel-in-progress: false
 
 jobs:
   update:
@@ -33,12 +29,9 @@ jobs:
 
       - name: 抓取实时数据（失败不中断，保留上次结果）
         run: |
-          python src/market_rt.py     || echo "[跳过] 行情接口未取到"
-          python src/finvoice.py      || echo "[跳过] 曲线接口未取到"
-          python src/news_fetch.py    || echo "[跳过] 新闻接口未取到"
-          python src/gtm_fetch.py     || echo "[跳过] 英国注册或车型接口未取到"
-          python src/overseas_dash.py || echo "[跳过] 英国看板数据未生成"
-          python src/market_de.py     || echo "[跳过] 德国贸易接口未取到"
+          python src/market_rt.py  || echo "[跳过] 行情接口未取到"
+          python src/finvoice.py   || echo "[跳过] 曲线接口未取到"
+          python src/news_fetch.py || echo "[跳过] 新闻接口未取到"
 
       - name: 重新生成三个页面
         run: |
@@ -55,6 +48,5 @@ jobs:
             echo "本次无数据变化，跳过提交"
           else
             git commit -m "chore: 每日数据更新 $(date -u +'%Y-%m-%d %H:%M UTC')"
-            git pull --rebase origin "${GITHUB_REF_NAME}" || true
             git push
           fi
