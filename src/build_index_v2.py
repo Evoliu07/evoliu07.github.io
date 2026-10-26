@@ -597,6 +597,10 @@ function getCloudClient(){
 }
 const contactForm=document.getElementById("contact-form");
 const contactStatus=document.getElementById("contact-status");
+const CLOUD_ORIGIN_HOST="boting-portfolio.app.workbuddy.host";
+if(location.hostname!==CLOUD_ORIGIN_HOST){
+  contactStatus.textContent="GitHub 版会打开你的邮件客户端发送，内容不会存入网页数据库。";
+}
 function setContactStatus(text, kind){
   contactStatus.textContent=text;
   contactStatus.className="form-note"+(kind?" "+kind:"");
@@ -609,6 +613,14 @@ contactForm.addEventListener("submit", async (event)=>{
   const contact=String(fd.get("contact")||"").trim();
   const message=String(fd.get("message")||"").trim();
   if(!name || message.length<5){ setContactStatus("请填写称呼和至少 5 个字的留言。","err"); return; }
+  if(location.hostname!==CLOUD_ORIGIN_HOST){
+    const subject=encodeURIComponent("来自个人网站的留言 · "+name);
+    const nl=String.fromCharCode(10,10);
+    const body=encodeURIComponent(message+nl+"联系方式："+(contact||"未填写"));
+    window.location.href="mailto:"+D.email+"?subject="+subject+"&body="+body;
+    setContactStatus("已打开邮件客户端，直接发送即可。","ok");
+    return;
+  }
   const btn=contactForm.querySelector('button[type="submit"]');
   btn.disabled=true; btn.textContent="发送中…"; setContactStatus("正在发送…","");
   try{
