@@ -501,6 +501,7 @@ HTML = """<!DOCTYPE html>
   <nav class="tabs" aria-label="主导航">
     <button data-v="exp" onclick="go('exp')">经历</button>
     <button data-v="proj" onclick="go('proj')">项目</button>
+    <a href="https://evoliu07.github.io/dfh-wm-brief/index.html" target="_blank" rel="noreferrer">东方红</a>
     <button data-v="cert" onclick="go('cert')">证书</button>
     <a href="news.html">财经快讯</a>
   </nav>
