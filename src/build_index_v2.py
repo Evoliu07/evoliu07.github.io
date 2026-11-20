@@ -371,6 +371,8 @@ main{max-width:960px}
 .hero .biohead{font-family:var(--font-b);font-size:21px;line-height:1.72;font-weight:500;
   text-align:left;max-width:650px;margin:22px 0 13px;color:var(--ink)}
 .hero .sub{font-size:12.5px;line-height:1.7;margin-top:0;color:var(--muted)}
+.hero .now{display:inline-flex;align-items:center;gap:6px;margin-top:10px;font-family:var(--font-d);font-size:11.5px;line-height:1.5;color:var(--red);background:var(--red-soft);border:1px solid rgba(158,43,37,.18);border-radius:999px;padding:5px 9px}
+.hero .now::before{content:"";width:5px;height:5px;border-radius:50%;background:var(--red)}
 .hero-actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:22px}
 .hero-actions a,.hero-actions button{display:inline-flex;align-items:center;justify-content:center;
   min-height:40px;padding:8px 18px;border-radius:8px;font-family:var(--font-d);font-size:13px;
@@ -478,8 +480,8 @@ main{max-width:960px}
 HTML = """<!DOCTYPE html>
 <html lang="zh-CN"><head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>刘柏廷 · 机构销售与渠道销售</title>
-<meta name="description" content="刘柏廷 BoTing LIU：公募/券商机构销售与渠道销售求职作品集。具备机构需求访谈、产品方案与准入跟进、渠道培训、投研转译及客户经营数据分析经验。">
+<title>刘柏廷 · 渠道销售与机构销售</title>
+<meta name="description" content="刘柏廷 BoTing LIU：渠道销售/机构销售求职作品集。具备机构需求访谈、产品方案与准入跟进、渠道培训、投研转译及客户经营数据分析经验。">
 <style>__CSS__</style></head>
 <body data-theme="warm-paper">
 
@@ -536,13 +538,15 @@ function setTheme(t){document.body.dataset.theme=t;
 document.getElementById("v-home").innerHTML=`
   <div class="hero">
     <div class="hero-copy">
-      <div class="eyebrow">公募 / 券商 · 机构销售与渠道销售</div>
+      <div class="eyebrow">2027 届 · 金融 × 统计</div>
       <h1>刘柏廷 <span>· Evo</span></h1>
-      <p class="target">求职方向：机构销售 · 渠道销售</p>
-      <p class="biohead">把投研观点讲成客户愿意行动的方案，<br>把客户反馈沉淀成可跟进的经营动作。</p>
+      <p class="target">求职方向：渠道销售 · 机构销售</p>
+      <p class="biohead">把产品数据讲成渠道能用的材料，<br>把一线反馈变成下一轮动作。</p>
       <p class="sub">${D.subtitle}</p>
+      <p class="now">最近经历：东方红资产管理 · 渠道经理助理</p>
       <div class="hero-actions">
         <a class="primary" href="mailto:${D.email}">发送邮件</a>
+        <button class="secondary" onclick="go('exp')">查看经历</button>
       </div>
       <p class="updated">页面更新：${D.meta.page_updated} · 数据期与抓取时间以看板标注为准</p>
     </div>
@@ -719,7 +723,7 @@ WX_JS = (Path(__file__).resolve().parent / "_wx_snippet.js").read_text(encoding=
 def static_fallback(d: dict) -> str:
     """无 JS 环境（含微信内核异常）时的静态内容，保证信息不丢。"""
     out = ['<div class="nofallback">']
-    out.append('<h3>求职方向：公募 / 券商机构销售 · 渠道销售</h3>')
+    out.append('<h3>求职方向：渠道销售 · 机构销售</h3>')
     for t in d.get("tracks", []):
         out.append(f'<p><b>{t["title"]}</b>（{" → ".join(t["chain"])}）</p>')
         out.append(f'<p>{t["text"]}</p>')
@@ -823,24 +827,24 @@ def main() -> None:
         "email": "lbt2238516944@163.com",
         "subtitle": "香港中文大学（深圳）计算社会科学（统计学）硕士在读",
         "stats": [
-            {"v": "22 家", "l": "机构需求台账"},
-            {"v": "12 场", "l": "线上机构交流"},
-            {"v": "3 家", "l": "参与推动产品准入"},
+            {"v": "40+", "l": "银行/券商网点走访"},
             {"v": "200+", "l": "渠道培训覆盖人次"},
+            {"v": "3 家", "l": "参与推动产品准入"},
+            {"v": "8000 万", "l": "机构意向规模"},
         ],
         "tracks": [
+            {"label": "渠道销售 · CHANNEL",
+             "title": "从产品数据到渠道触达",
+             "chain": ["产品数据 / 销售材料", "40+ 网点走访", "问询反馈与迭代"],
+             "text": "东方红资产管理深圳分公司渠道经理助理：按日维护纯债、均衡权益等产品净值与销售推介材料，统一业绩口径；走访浦发、工行等银行网点及券商营业部 40+ 家，汇总一线问询与竞品对比，推动材料与话术调整。此前诺安基金华中业务部对接四省市渠道，培训覆盖 200+ 人次，用市场反馈优化推广节奏。"},
             {"label": "机构销售 · INSTITUTIONAL",
              "title": "从需求访谈到产品准入",
              "chain": ["需求访谈", "方案匹配", "准入跟进"],
              "text": "鹏扬基金机构业务部实习：覆盖券商资管、城商行理财子与地方产业平台，围绕风险偏好、久期约束和配置诉求整理需求，协同投研与产品准备固收+、权益赛道尽调材料及投资建议书；参与推动 3 家机构完成产品准入，机构意向规模合计约 8000 万元。"},
-            {"label": "渠道销售 · CHANNEL",
-             "title": "从渠道维护到培训与复盘",
-             "chain": ["华中四省市渠道", "200+ 人次培训", "覆盖率 / 转化率复盘"],
-             "text": "诺安基金华中业务部实习：持续对接一线理财经理，围绕科技和半导体主题基金拆解持仓、行业景气、历史净值与回撤，参与制作路演材料和渠道培训；将市场反馈用于差异化营销、竞品分析与推广节奏优化。"},
         ],
         "service": [
-            {"title": "机构投研服务｜华福证券",
-             "text": "累计输出 10+ 份政策解读／专题材料，支持策略路演、电话会议、调研活动与客户反馈跟进。"},
+            {"title": "产品数据与渠道材料｜东方红资产管理",
+             "text": "按日维护纯债、均衡权益等产品净值与销售材料，统一业绩口径；走访浦发、工行等银行网点及券商营业部 40+ 家，汇总渠道问询与竞品对比，反馈团队调整推介材料与话术。"},
             {"title": "产品与投后响应｜银河金汇",
              "text": "撰写 20+ 份产品材料并支持 4 场路演；覆盖 10+ 份产品／组合的净值跟踪与业绩归因，支持机构问询响应。"},
         ],
@@ -853,20 +857,20 @@ def main() -> None:
              "honor": "商学院院长优秀毕业生"},
         ],
         "about": {
-            "head": ["金融 × 统计复合背景", "机构客户经营、投研转译与数据驱动提效"],
+            "head": ["金融 × 统计复合背景", "产品数据、渠道触达与反馈迭代"],
             "items": [
-                {"k": "市场跟踪与政策研判", "v": "华福证券研究所策略组维护 A 股／港股日度跟踪体系，AI 自动化监测 PMI、社融、两融余额等关键指标；累计输出 10+ 份政策解读／专题材料，支持策略路演与机构客户日常沟通。"},
+                {"k": "产品数据与渠道触达", "v": "东方红资产管理深圳分公司渠道经理助理：按日维护纯债、均衡权益等产品净值与销售材料，统一业绩口径；走访浦发、工行等银行网点及券商营业部 40+ 家，汇总渠道问询与竞品对比，推动推介材料与沟通话术调整。"},
                 {"k": "机构客户开发与准入推进", "v": "鹏扬基金机构业务部建立 22 家机构需求台账（券商资管、城商行理财子、地方产业平台），开展 12 场线上交流，推动 3 家机构完成产品准入，意向规模合计约 8000 万元。"},
                 {"k": "渠道经营与投研转译", "v": "诺安基金深度对接华中四省渠道，培训覆盖 200+ 人次；把赛道投资逻辑转译为客户适配要点，推进差异化营销与竞品分析，区域销售效能环比提升 15%。"},
                 {"k": "数据驱动的业务拆解与提效", "v": "京东零售拆解线索至上线全周期转化数据，搭建城市预警与监控看板，交付周期缩短 30%，团队执行力提升 20%。"},
             ],
         },
         "career": [
-            {"tag": "华福", "c": "#8a5a2b", "org": "华福证券股份有限公司",
-             "role": "研究所-策略组-首席分析师助理", "when": "2026.07 – 2026.09", "pts": [
-                 {"k": "日频跟踪研究支持", "v": "维护 A 股、港股及宏观流动性日度跟踪体系，AI 自动化监测 PMI、社融、两融余额等关键指标；更新市场数据及晨会／日报点评，支持策略组市场研判与日常研究服务。"},
-                 {"k": "政策解读专题输出", "v": "梳理重要政策及宏观事件，提炼政策目标、受益方向与市场影响路径；累计输出 10+ 份政策解读／专题材料，撰写行业简评报告，传递策略观点并与机构客户日常沟通。"},
-                 {"k": "客户需求对接及路演服务", "v": "筹备策略路演、电话会议与调研活动，精准捕捉客户关注的市场问题及反馈，并完善后续观点与服务内容，提升客户粘性。"}]},
+            {"tag": "东方红", "c": "#9e2b25", "org": "上海东方证券资产管理有限公司",
+             "role": "深圳分公司-渠道经理助理", "when": "2026.10 – 2026.11", "pts": [
+                 {"k": "产品数据与销售材料支持", "v": "按日维护纯债型、均衡权益等类型产品的净值数据与销售推介材料，统一产品业绩口径，支撑银行、券商渠道的产品推介与持续营销，保障一线网点拿到的净值与材料口径一致、按时更新。"},
+                 {"k": "渠道触达与需求反馈", "v": "走访浦发、工商银行等银行网点及券商营业部 40+ 家，面向一线理财经理完成产品信息传递与日常回访；汇总渠道问询与竞品对比需求并反馈团队，推动推介材料与沟通话术调整。"},
+                 {"k": "进度跟踪与资源倾斜", "v": "跟踪产品在各网点的销售进度，结合网点意愿与产出情况，支持团队向高意愿、高产出网点倾斜渠道资源。"}]},
             {"tag": "京东", "c": "#e21a1a", "org": "京东集团股份有限公司-京东零售",
              "role": "商务拓展岗", "when": "2026.03 – 2026.07", "pts": [
                  {"k": "链路拆解预警促活", "v": "围绕线索至上线全周期拆解转化数据，识别流失卡点，搭建城市预警机制，对滞后客户前置干预，交付周期缩短 30%，聚焦高价值客户开拓、转化率提升及存量裂变，完成意向到上线业务闭环。"},
