@@ -426,6 +426,17 @@ main{max-width:960px}
 .site-foot a:hover{color:var(--red)}
 .site-foot .contact-link{color:var(--red);font-weight:750;font-size:12.5px}
 .site-foot .contact-link:hover{color:var(--ink);text-decoration:underline}
+.home-feature{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(240px,.85fr);gap:28px;margin-top:30px;padding:24px 0 22px;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.home-feature h3{font-family:var(--font-b);font-size:24px;line-height:1.4;margin:7px 0 8px}
+.home-feature p{font-family:var(--font-d);font-size:12px;line-height:1.85;color:var(--ink2);max-width:620px}
+.feature-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:11px}
+.feature-tags span{font-family:var(--font-d);font-size:9.5px;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:3px 8px;background:rgba(255,250,240,.55)}
+.feature-links{display:flex;flex-direction:column;justify-content:center;gap:0}
+.feature-links a{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:9px 0;border-bottom:1px solid var(--line);font-family:var(--font-d);font-size:12px;color:var(--ink2);text-decoration:none}
+.feature-links a:first-child{border-top:1px solid var(--line)}
+.feature-links a:hover{color:var(--red);text-decoration:none}
+.feature-links a span{color:var(--red);font-size:15px}
+@media(max-width:900px){.home-feature{grid-template-columns:1fr;gap:14px}}
 .jump{grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:30px}
 .jump button{border-radius:10px;padding:15px 16px;text-align:left;background:var(--surface)}
 .jump button b{font-size:13px}
@@ -491,7 +502,6 @@ HTML = """<!DOCTYPE html>
     <button data-v="exp" onclick="go('exp')">经历</button>
     <button data-v="proj" onclick="go('proj')">项目</button>
     <button data-v="cert" onclick="go('cert')">证书</button>
-    <a href="dashboard.html">数据看板</a>
     <a href="news.html">财经快讯</a>
   </nav>
   <div class="bar-r">
@@ -565,11 +575,25 @@ document.getElementById("v-home").innerHTML=`
     <div class="chain">${t.chain.map(c=>`<span>${c}</span>`).join("")}</div>
     <p>${t.text}</p></article>`).join("")}</div>
   <div class="service-grid">${D.service.map(s=>`<div class="service"><b>${s.title}</b><p>${s.text}</p></div>`).join("")}</div>
+  <div class="home-feature">
+    <div>
+      <div class="eyebrow">FEATURED · 东方红</div>
+      <h3>东方红渠道内容平台</h3>
+      <p>把纯债、均衡权益产品的净值、市场数据、宏观政策、基金经理画像和客户沟通话术，整理成主站 + 两个产品页，服务银行、券商一线理财经理。</p>
+      <div class="feature-tags"><span>产品数据</span><span>市场速览</span><span>双产品页</span><span>公开信息雷达</span></div>
+    </div>
+    <div class="feature-links">
+      <a href="https://evoliu07.github.io/dfh-wm-brief/index.html">市场速览 <span>→</span></a>
+      <a href="https://evoliu07.github.io/dfh-wm-brief/jiajun.html">嘉俊均衡 <span>→</span></a>
+      <a href="https://evoliu07.github.io/dfh-wm-brief/yixin.html">益鑫纯债 <span>→</span></a>
+      <a href="https://evoliu07.github.io/dfh-public-radar/">公开信息雷达 <span>→</span></a>
+    </div>
+  </div>
   <div class="jump">
     <button onclick="go('exp')"><b>经历 →</b><span>教育背景与六段实习</span></button>
-    <button onclick="go('proj')"><b>项目 →</b><span>客户经营 · 利率 · 出海</span></button>
+    <button onclick="go('proj')"><b>项目 →</b><span>东方红 · 雷达 · 出海</span></button>
     <button onclick="location.href='news.html'"><b>财经快讯 →</b><span>每日更新 · 来源可追溯</span></button>
-    <button onclick="location.href='dashboard.html'"><b>数据看板 →</b><span>金融优先 · 出海补充</span></button>
+    <button onclick="location.href='https://evoliu07.github.io/dfh-wm-brief/index.html'"><b>东方红 →</b><span>渠道内容 · 双产品页</span></button>
   </div>`;
 
 document.getElementById("v-exp").innerHTML=`
@@ -827,7 +851,7 @@ def main() -> None:
         "email": "lbt2238516944@163.com",
         "subtitle": "香港中文大学（深圳）计算社会科学（统计学）硕士在读",
         "stats": [
-            {"v": "40+", "l": "银行/券商网点走访"},
+            {"v": "60+", "l": "银行/券商网点走访"},
             {"v": "200+", "l": "渠道培训覆盖人次"},
             {"v": "3 家", "l": "参与推动产品准入"},
             {"v": "8000 万", "l": "机构意向规模"},
@@ -835,8 +859,8 @@ def main() -> None:
         "tracks": [
             {"label": "渠道销售 · CHANNEL",
              "title": "从产品数据到渠道触达",
-             "chain": ["产品数据 / 销售材料", "40+ 网点走访", "问询反馈与迭代"],
-             "text": "东方红资产管理深圳分公司渠道经理助理：按日维护纯债、均衡权益等产品净值与销售推介材料，统一业绩口径；走访浦发、工行等银行网点及券商营业部 40+ 家，汇总一线问询与竞品对比，推动材料与话术调整。此前诺安基金华中业务部对接四省市渠道，培训覆盖 200+ 人次，用市场反馈优化推广节奏。"},
+             "chain": ["产品数据 / 销售材料", "60+ 网点走访", "问询反馈与迭代"],
+             "text": "东方红资产管理深圳分公司渠道经理助理：日维度 AI 自动化维护纯债、均衡权益等产品净值与销售推介材料，统一业绩口径；走访浦发、工行等银行网点及券商营业部 60+ 家，汇总一线问询与竞品对比，推动材料与话术调整。此前诺安基金华中业务部对接四省市渠道，培训覆盖 200+ 人次，用市场反馈优化推广节奏。"},
             {"label": "机构销售 · INSTITUTIONAL",
              "title": "从需求访谈到产品准入",
              "chain": ["需求访谈", "方案匹配", "准入跟进"],
@@ -844,7 +868,7 @@ def main() -> None:
         ],
         "service": [
             {"title": "产品数据与渠道材料｜东方红资产管理",
-             "text": "按日维护纯债、均衡权益等产品净值与销售材料，统一业绩口径；走访浦发、工行等银行网点及券商营业部 40+ 家，汇总渠道问询与竞品对比，反馈团队调整推介材料与话术。"},
+             "text": "日维度 AI 自动化维护纯债、均衡权益等产品净值与销售材料，统一业绩口径；走访浦发、工行等银行网点及券商营业部 60+ 家，汇总渠道问询与竞品对比，反馈团队调整推介材料与话术。"},
             {"title": "产品与投后响应｜银河金汇",
              "text": "撰写 20+ 份产品材料并支持 4 场路演；覆盖 10+ 份产品／组合的净值跟踪与业绩归因，支持机构问询响应。"},
         ],
@@ -859,7 +883,7 @@ def main() -> None:
         "about": {
             "head": ["金融 × 统计复合背景", "产品数据、渠道触达与反馈迭代"],
             "items": [
-                {"k": "产品数据与渠道触达", "v": "东方红资产管理深圳分公司渠道经理助理：按日维护纯债、均衡权益等产品净值与销售材料，统一业绩口径；走访浦发、工行等银行网点及券商营业部 40+ 家，汇总渠道问询与竞品对比，推动推介材料与沟通话术调整。"},
+                {"k": "产品数据与渠道触达", "v": "东方红资产管理深圳分公司渠道经理助理：日维度 AI 自动化维护纯债、均衡权益等产品净值与销售材料，统一业绩口径；走访浦发、工行等银行网点及券商营业部 60+ 家，汇总渠道问询与竞品对比，推动推介材料与沟通话术调整。"},
                 {"k": "机构客户开发与准入推进", "v": "鹏扬基金机构业务部建立 22 家机构需求台账（券商资管、城商行理财子、地方产业平台），开展 12 场线上交流，推动 3 家机构完成产品准入，意向规模合计约 8000 万元。"},
                 {"k": "渠道经营与投研转译", "v": "诺安基金深度对接华中四省渠道，培训覆盖 200+ 人次；把赛道投资逻辑转译为客户适配要点，推进差异化营销与竞品分析，区域销售效能环比提升 15%。"},
                 {"k": "数据驱动的业务拆解与提效", "v": "京东零售拆解线索至上线全周期转化数据，搭建城市预警与监控看板，交付周期缩短 30%，团队执行力提升 20%。"},
@@ -868,8 +892,8 @@ def main() -> None:
         "career": [
             {"tag": "东方红", "c": "#9e2b25", "org": "上海东方证券资产管理有限公司",
              "role": "深圳分公司-渠道经理助理", "when": "2026.10 – 2026.11", "pts": [
-                 {"k": "产品数据与销售材料支持", "v": "按日维护纯债型、均衡权益等类型产品的净值数据与销售推介材料，统一产品业绩口径，支撑银行、券商渠道的产品推介与持续营销，保障一线网点拿到的净值与材料口径一致、按时更新。"},
-                 {"k": "渠道触达与需求反馈", "v": "走访浦发、工商银行等银行网点及券商营业部 40+ 家，面向一线理财经理完成产品信息传递与日常回访；汇总渠道问询与竞品对比需求并反馈团队，推动推介材料与沟通话术调整。"},
+                 {"k": "产品数据与销售材料支持", "v": "日维度 AI 自动化维护纯债型、均衡权益等类型产品的净值数据与销售推介材料，统一产品业绩口径，支撑银行、券商渠道的产品推介与持续营销。"},
+                 {"k": "渠道触达与需求反馈", "v": "走访浦发、工商银行等银行网点及券商营业部 60+ 家，面向一线理财经理完成产品信息传递与日常回访沟通；汇总渠道问询与竞品对比需求并反馈团队，推动推介材料与沟通话术调整。"},
                  {"k": "进度跟踪与资源倾斜", "v": "跟踪产品在各网点的销售进度，结合网点意愿与产出情况，支持团队向高意愿、高产出网点倾斜渠道资源。"}]},
             {"tag": "京东", "c": "#e21a1a", "org": "京东集团股份有限公司-京东零售",
              "role": "商务拓展岗", "when": "2026.03 – 2026.07", "pts": [
@@ -898,6 +922,22 @@ def main() -> None:
                  {"k": "厅堂服务与活动支持", "v": "协助厅堂识别有理财需求的客户并完成风险测评、双录及资料初审；整理沙龙物料、签到与会后跟进清单，配合开展客户答谢及产品宣讲；维护客户台账与活动反馈，支持财富团队日常营销与合规留痕。"}]},
         ],
         "projects": [
+            {"kick": "渠道内容 › 东方红资产管理",
+             "title": "东方红渠道内容平台：产品页 + 市场速览",
+             "sum": "把纯债、均衡权益产品的净值、市场数据、宏观政策、基金经理画像和客户沟通话术，整理成主站 + 两个产品页，服务银行、券商一线理财经理。",
+             "tags": ["产品数据", "销售材料", "宏观政策", "买卖区间"],
+             "links": [
+                 {"href": "https://evoliu07.github.io/dfh-wm-brief/index.html", "label": "市场速览 →"},
+                 {"href": "https://evoliu07.github.io/dfh-wm-brief/jiajun.html", "label": "嘉俊均衡 →"},
+                 {"href": "https://evoliu07.github.io/dfh-wm-brief/yixin.html", "label": "益鑫纯债 →"},
+             ],
+             "body": "<p>主站按交易日更新 9 个市场指标，产品页分别放嘉俊均衡与益鑫纯债的产品要素、基金经理画像、宏观政策、回撤沟通和买卖区间；净值与材料口径按日维护。</p>"},
+            {"kick": "公开信息 › 东方红雷达",
+             "title": "东方红公开信息雷达：双产品数据看板",
+             "sum": "把嘉俊均衡、益鑫纯债的公开产品要素、政策与事件、市场温度、公开新闻按产品归类，做成工作日自动更新的公开信息雷达。",
+             "tags": ["公开数据", "产品要素", "政策事件", "新闻雷达"],
+             "links": [{"href": "https://evoliu07.github.io/dfh-public-radar/", "label": "打开公开信息雷达 →"}],
+             "body": "<p>只汇总公开资料，不包含客户信息或内部数据；产品要素、事件、利率与权益指标、新闻按产品归类。</p>"},
             {"kick": "数据看板 › 金融",
              "title": "利率研究：宏观流动性、利率与曲线结构",
              "sum": "围绕国债收益率曲线、期限利差与宏观流动性读数，把利率变化拆成可复核的一组数字，"
@@ -949,7 +989,7 @@ def main() -> None:
         out.write_text(contact_html, encoding="utf-8")
     log_line(f"主页已生成：index.html（{len(html)/1048576:.2f} MB）")
     log_line(f"联系我：contact.html（{len(contact_html)/1024:.0f} KB）")
-    log_line(f"  导航 5 项 · 实习 {len(data['career'])} 段 · 项目 {len(data['projects'])} 个"
+    log_line(f"  导航 4 项 · 实习 {len(data['career'])} 段 · 项目 {len(data['projects'])} 个"
              f" · 证书 {len(certs)} 项")
 
 
